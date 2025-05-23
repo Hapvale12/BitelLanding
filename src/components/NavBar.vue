@@ -43,12 +43,12 @@ function handleClick(event: Event, path: string) {
     justify-content: space-between;
     padding: 6px 32px;
     background-color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     font-family: 'BreeCFApp', sans-serif;
 }
 
 .logo img {
-    height: 70px;
+    height: 50px;
 }
 
 .nav-links {
@@ -59,7 +59,7 @@ function handleClick(event: Event, path: string) {
 
 .nav-button {
     color: #057689;
-    font-size: 20px;
+    font-size: 19.5px;
     font-weight: bolder;
     letter-spacing: 0.15em;
     text-decoration: none;

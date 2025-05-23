@@ -39,110 +39,6 @@
 </template>
 
 
-<script setup>
-
-import { ref, computed } from 'vue';
-
-import paramount from '../assets/paramount.png';
-import bitel_tv from '../assets/bitel_tv.png';
-
-const trackStyle = computed(() => ({
-    transform: `translateX(-${currentIndex.value * 18.5}rem)`,
-    transition: isTransitioning.value ? 'transform 0.3s ease-in-out' : 'none',
-    display: 'flex',
-}));
-
-const isTransitioning = ref(false);
-const images = [paramount, bitel_tv];
-
-const extendedPlans = computed(() => {
-    return [
-        ...plans.slice(-3),  // últimos 3 (clones)
-        ...plans,
-        ...plans.slice(0, 3), // primeros 3 (clones)
-    ];
-});
-
-const currentIndex = ref(3); // empieza en el primer real (por los clones delante)
-
-const plans = [
-    {
-        "plan_nombre": "Plan Ilimitado",
-        "precio_referencia": 55.90,
-        "gb_alta_velocidad": 75,
-        "descuento_porcentaje": 50,
-        "precio_descuento": 27.90,
-        "meses_descuento": 12,
-        "descripcion": "Plan todo ilimitado, llamadas, sms, internet, más 60GB en alta velocidad, 30GB para Tik Tok.",
-        "suscripcion_incluida": "Paramount+ y BITEL TV 360",
-        "duracion_suscripcion": "6 meses"
-    },
-    {
-        "plan_nombre": "Plan ilimitado",
-        "precio_referencia": 69.90,
-        "gb_alta_velocidad": 110,
-        "descuento_porcentaje": 50,
-        "precio_descuento": 34.90,
-        "meses_descuento": 12,
-        "descripcion": "Plan todo ilimitado, llamadas, sms, internet.Incluye suscripción a streaming",
-        "suscripcion_incluida": "Paramount+ y BITEL TV 360",
-        "duracion_suscripcion": "6 meses"
-    },
-    {
-        "plan_nombre": "Plan Ilimitado",
-        "precio_referencia": 79.90,
-        "gb_alta_velocidad": 125,
-        "descuento_porcentaje": 50,
-        "precio_descuento": 39.90,
-        "meses_descuento": 12,
-        "descripcion": "Plan todo ilimitado, llamadas, sms, internet, más 60GB en alta velocidad, 30GB para Tik Tok.",
-        "suscripcion_incluida": "Paramount+ y BITEL TV 360",
-        "duracion_suscripcion": "6 meses"
-    },
-    {
-        "plan_nombre": "Plan flash",
-        "precio_referencia": 109.90,
-        "gb_alta_velocidad": 200,
-        "descuento_porcentaje": 50,
-        "precio_descuento": 54.95,
-        "meses_descuento": 12,
-        "descripcion": "Plan todo ilimitado, llamadas, sms, internet.Incluye suscripción a streaming",
-        "suscripcion_incluida": "Paramount+ y BITEL TV 360",
-        "duracion_suscripcion": "6 meses"
-    }
-];
-
-function next() {
-    if (isTransitioning.value) return;
-    isTransitioning.value = true;
-    currentIndex.value++;
-
-    setTimeout(() => {
-        isTransitioning.value = false;
-        if (currentIndex.value === plans.length + 3) {
-            // saltar sin transición al primer real
-            isTransitioning.value = false;
-            currentIndex.value = 3;
-        }
-    }, 500);
-}
-
-function prev() {
-    if (isTransitioning.value) return;
-    isTransitioning.value = true;
-    currentIndex.value--;
-
-    setTimeout(() => {
-        isTransitioning.value = false;
-        if (currentIndex.value === 2) {
-            // saltar sin transición al último real
-            isTransitioning.value = plans.length + 2;
-        }
-    }, 500);
-}
-
-</script>
-
 <style scoped>
 @font-face {
     font-family: BreeCFApp;
@@ -169,16 +65,19 @@ function prev() {
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    width: fit-content; /* Que se ajuste al contenido */
-    margin: 0 auto; /* Centrar en la página */
-    overflow: visible; /* Permitir que botones se muestren afuera */
+    width: fit-content;
+    /* Que se ajuste al contenido */
+    margin: 0 auto;
+    /* Centrar en la página */
+    overflow: visible;
+    /* Permitir que botones se muestren afuera */
     position: relative;
 }
 
 /* Ajustar el ancho del track para que encaje con los botones */
 .carousel-track {
     overflow: hidden;
-    max-width: 56rem;
+    max-width: 53.25rem;
     margin: 0 auto;
     position: relative;
 }
@@ -195,7 +94,8 @@ function prev() {
     border-radius: 8px;
     text-align: center;
     flex-shrink: 0;
-    width: 18.5rem; /* Coincide con flex-basis para evitar salto */
+    width: 18.5rem;
+    /* Coincide con flex-basis para evitar salto */
     transition: transform 0.3s ease;
 }
 
@@ -227,11 +127,13 @@ function prev() {
 }
 
 .nav-button.left {
-    left: -2.25rem;  /* justo afuera y pegado */
+    left: -2.5rem;
+    /* justo afuera y pegado */
 }
 
 .nav-button.right {
-    right: -2.25rem; /* justo afuera y pegado */
+    right: -2.5rem;
+    /* justo afuera y pegado */
 }
 
 .slide-enter-active,
@@ -348,11 +250,147 @@ function prev() {
 
 .paragraph {
     font-size: 0.9rem;
-    color: #057689;
     font-weight: 300;
     line-height: 1.5rem;
     margin: 0;
     height: 90px;
     padding: 0.5rem 1rem;
 }
+
+@media (max-width: 768px) {
+    .carousel-track {
+        max-width: 100vw;
+        padding: 0 1rem;
+    }
+
+    .plan-container-map {
+        flex: 0 0 85vw;
+        /* Mostrar una y parte de otra */
+        margin-right: 1rem;
+    }
+
+    .plan-container {
+        width: 100%;
+    }
+
+    .nav-button.left {
+        left: 0;
+    }
+
+    .nav-button.right {
+        right: 0;
+    }
+}
 </style>
+
+<script setup>
+
+import { ref, computed } from 'vue';
+
+import paramount from '../assets/paramount.png';
+import bitel_tv from '../assets/bitel_tv.png';
+const slideWidth = ref(getSlideWidth());
+
+function getSlideWidth() {
+  return window.innerWidth <= 768 ? window.innerWidth * 0.85 + 16 : 18.5 * 16 + 7.5;
+}
+
+window.addEventListener('resize', () => {
+  slideWidth.value = getSlideWidth();
+});
+
+const trackStyle = computed(() => ({
+  transform: `translateX(-${currentIndex.value * slideWidth.value}px)`,
+  transition: isTransitioning.value ? 'transform 0.3s ease-in-out' : 'none',
+  display: 'flex',
+}));
+
+const isTransitioning = ref(false);
+const images = [paramount, bitel_tv];
+
+const extendedPlans = computed(() => {
+    return [
+        ...plans.slice(-3),  // últimos 3 (clones)
+        ...plans,
+        ...plans.slice(0, 3), // primeros 3 (clones)
+    ];
+});
+
+const currentIndex = ref(3); // empieza en el primer real (por los clones delante)
+
+const plans = [
+    {
+        "plan_nombre": "Plan Ilimitado",
+        "precio_referencia": 55.90,
+        "gb_alta_velocidad": 75,
+        "descuento_porcentaje": 50,
+        "precio_descuento": 27.90,
+        "meses_descuento": 12,
+        "descripcion": "Plan todo ilimitado, llamadas, sms, internet, más 60GB en alta velocidad, 30GB para Tik Tok.",
+        "suscripcion_incluida": "Paramount+ y BITEL TV 360",
+        "duracion_suscripcion": "6 meses"
+    },
+    {
+        "plan_nombre": "Plan ilimitado",
+        "precio_referencia": 69.90,
+        "gb_alta_velocidad": 110,
+        "descuento_porcentaje": 50,
+        "precio_descuento": 34.90,
+        "meses_descuento": 12,
+        "descripcion": "Plan todo ilimitado, llamadas, sms, internet.Incluye suscripción a streaming",
+        "suscripcion_incluida": "Paramount+ y BITEL TV 360",
+        "duracion_suscripcion": "6 meses"
+    },
+    {
+        "plan_nombre": "Plan Ilimitado",
+        "precio_referencia": 79.90,
+        "gb_alta_velocidad": 125,
+        "descuento_porcentaje": 50,
+        "precio_descuento": 39.90,
+        "meses_descuento": 12,
+        "descripcion": "Plan todo ilimitado, llamadas, sms, internet, más 60GB en alta velocidad, 30GB para Tik Tok.",
+        "suscripcion_incluida": "Paramount+ y BITEL TV 360",
+        "duracion_suscripcion": "6 meses"
+    },
+    {
+        "plan_nombre": "Plan flash",
+        "precio_referencia": 109.90,
+        "gb_alta_velocidad": 200,
+        "descuento_porcentaje": 50,
+        "precio_descuento": 54.95,
+        "meses_descuento": 12,
+        "descripcion": "Plan todo ilimitado, llamadas, sms, internet.Incluye suscripción a streaming",
+        "suscripcion_incluida": "Paramount+ y BITEL TV 360",
+        "duracion_suscripcion": "6 meses"
+    }
+];
+
+function next() {
+    if (isTransitioning.value) return;
+    isTransitioning.value = true;
+    currentIndex.value++;
+
+    setTimeout(() => {
+        isTransitioning.value = false;
+        if (currentIndex.value === plans.length + 3) {
+            // saltar sin transición al primer real
+            isTransitioning.value = false;
+            currentIndex.value = 3;
+        }
+    }, 500);
+}
+
+function prev() {
+    if (isTransitioning.value) return;
+    isTransitioning.value = true;
+    currentIndex.value--;
+
+    setTimeout(() => {
+        isTransitioning.value = false;
+        if (currentIndex.value === 2) {
+            // saltar sin transición al último real
+            isTransitioning.value = plans.length + 2;
+        }
+    }, 500);
+}
+</script>

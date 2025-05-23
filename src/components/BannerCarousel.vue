@@ -152,7 +152,7 @@ function endDrag(event: MouseEvent | TouchEvent) {
     aspect-ratio: 30 / 10;
     overflow: hidden;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     background: linear-gradient(90deg, #fdf100, #000);
 }
 
