@@ -136,6 +136,7 @@ function endDrag(event: MouseEvent | TouchEvent) {
 </script>
 
 <style scoped>
+
 .carousel-container {
     display: flex;
     justify-content: center;

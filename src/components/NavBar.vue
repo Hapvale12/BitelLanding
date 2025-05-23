@@ -1,9 +1,17 @@
 <template>
     <header class="navbar">
-        <div class="logo">
-            <img src="../assets/logo_bitel.png" alt="Bitel Logo" />
+        <div class="navbar-top">
+            <div class="logo">
+                <img src="../assets/logo_bitel.png" alt="Bitel Logo" />
+            </div>
+            <button class="hamburger" @click="toggleMenu" :class="{ open: menuOpen }" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-        <nav class="nav-links">
+
+        <nav class="nav-links" :class="{ open: menuOpen }">
             <a href="#" class="nav-button" @click.prevent="handleClick($event, '/')"
                 :class="{ loading: activePath === '/' }">
                 Cámbiate a Bitel
@@ -22,6 +30,7 @@ import { ref } from 'vue';
 
 const router = useRouter();
 const activePath = ref<string | null>(null);
+const menuOpen = ref(false);
 
 function handleClick(event: Event, path: string) {
     if (activePath.value) return;
@@ -29,30 +38,93 @@ function handleClick(event: Event, path: string) {
     setTimeout(() => {
         router.push(path);
         activePath.value = null;
+        menuOpen.value = false; // Cierra el menú tras hacer clic
     }, 200);
+}
+
+function toggleMenu() {
+    menuOpen.value = !menuOpen.value;
 }
 </script>
 
 <style>
+/* Estilo general (modo desktop) */
+
+/* Hamburguesa animada */
+.hamburger {
+    display: none;
+    width: 30px;
+    height: 22px;
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.hamburger span {
+    display: block;
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background: #057689;
+    border-radius: 2px;
+    opacity: 1;
+    left: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.hamburger span:nth-child(1) {
+    top: 0;
+}
+
+.hamburger span:nth-child(2) {
+    top: 9px;
+}
+
+.hamburger span:nth-child(3) {
+    top: 18px;
+}
+
+.hamburger.open span:nth-child(1) {
+    top: 9px;
+    transform: rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+    top: 9px;
+    transform: rotate(-45deg);
+}
+
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 6px 32px;
     background-color: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     font-family: 'BreeCFApp', sans-serif;
-    flex-wrap: wrap;
+    padding: 6px 32px;
+    display: flex;
+    justify-content: space-between;
+
 }
 
 .logo img {
     height: 50px;
 }
 
+.navbar-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .nav-links {
     display: flex;
+    justify-content: flex-end;
+    align-items: center;
     gap: 40px;
-    min-width: 400px;
 }
 
 .nav-button {
@@ -63,11 +135,9 @@ function handleClick(event: Event, path: string) {
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-    transition:
-        color 0.4s ease,
-        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-        text-shadow 0.3s ease;
+    transition: color 0.4s ease, transform 0.3s, text-shadow 0.3s;
 }
+
 
 .nav-button:hover {
     color: #fdf100;
@@ -120,29 +190,49 @@ function handleClick(event: Event, path: string) {
 }
 
 /* Corrección responsive */
+
+/* SOLO móvil: */
 @media (max-width: 768px) {
     .navbar {
-        flex-direction: column;
-        align-items: center;
         padding: 12px 16px;
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    .logo img {
-        height: 55px;
-        margin-bottom: 10px;
+    .hamburger {
+        display: block;
     }
 
     .nav-links {
         flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        min-width: auto;
+        align-items: flex-start;
         width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-10px);
+        pointer-events: none;
+        gap: 20px;
+        transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .nav-links.open {
+        max-height: 200px;
+        /* Aumenta si hay más elementos */
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+        padding-top: 12px;
+    }
+
+    .logo img {
+        height: 40px;
     }
 
     .nav-button {
         font-size: 18px;
-        text-align: center;
+        width: 100%;
+        text-align: left;
     }
 }
 </style>
