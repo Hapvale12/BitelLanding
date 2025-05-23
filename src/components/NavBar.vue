@@ -24,17 +24,14 @@ const router = useRouter();
 const activePath = ref<string | null>(null);
 
 function handleClick(event: Event, path: string) {
-    if (activePath.value) return; // evita múltiples clics
+    if (activePath.value) return;
     activePath.value = path;
-
-    // Simula una animación de carga antes de navegar
     setTimeout(() => {
         router.push(path);
         activePath.value = null;
-    }, 200); // ajusta el tiempo a gusto
+    }, 200);
 }
 </script>
-
 
 <style>
 .navbar {
@@ -45,6 +42,7 @@ function handleClick(event: Event, path: string) {
     background-color: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     font-family: 'BreeCFApp', sans-serif;
+    flex-wrap: wrap;
 }
 
 .logo img {
@@ -65,7 +63,6 @@ function handleClick(event: Event, path: string) {
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-
     transition:
         color 0.4s ease,
         transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -75,8 +72,6 @@ function handleClick(event: Event, path: string) {
 .nav-button:hover {
     color: #fdf100;
     transform: scale(1.1) scaleY(1.2);
-
-    /* Sombra amarilla + borde negro */
     text-shadow:
         -1px -1px 0 #000,
         1px -1px 0 #000,
@@ -88,7 +83,6 @@ function handleClick(event: Event, path: string) {
 .nav-button:active {
     transform: scale(0.95) scaleY(1.2);
     color: #e6d800;
-    /* Mantener borde negro sin brillo */
     text-shadow:
         -1px -1px 0 #000,
         1px -1px 0 #000,
@@ -98,7 +92,6 @@ function handleClick(event: Event, path: string) {
 
 .nav-button.loading {
     pointer-events: none;
-    /* no permite clicks mientras carga */
     color: #fdf100;
     animation: pulse 1s infinite;
     position: relative;
@@ -123,6 +116,33 @@ function handleClick(event: Event, path: string) {
             -1px 1px 0 #000,
             1px 1px 0 #000,
             0 0 20px #fdf100;
+    }
+}
+
+/* Corrección responsive */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 16px;
+    }
+
+    .logo img {
+        height: 55px;
+        margin-bottom: 10px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        min-width: auto;
+        width: 100%;
+    }
+
+    .nav-button {
+        font-size: 18px;
+        text-align: center;
     }
 }
 </style>

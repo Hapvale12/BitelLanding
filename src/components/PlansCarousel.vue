@@ -60,25 +60,22 @@
 }
 
 .carousel-wrapper {
+    width: 80%;
     padding: 20px 0;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    width: fit-content;
-    /* Que se ajuste al contenido */
     margin: 0 auto;
-    /* Centrar en la página */
     overflow: visible;
-    /* Permitir que botones se muestren afuera */
     position: relative;
 }
 
 /* Ajustar el ancho del track para que encaje con los botones */
+
 .carousel-track {
     overflow: hidden;
-    max-width: 53.25rem;
-    margin: 0 auto;
+    width: 100%;
     position: relative;
 }
 
@@ -109,7 +106,7 @@
     border-radius: 0.5rem;
     border: 0.09rem solid #21bdbb;
     overflow: hidden;
-    min-height: 470px;
+    min-height: 65dvh;
 }
 
 .nav-button {
@@ -230,8 +227,15 @@
 .images-container {
     display: flex;
     justify-content: center;
-    gap: 0.8rem;
+    padding-top: 15px;
+    gap: 1rem;
     width: 100%;
+}
+
+.images-container img {
+    object-fit: cover;
+    border-radius: 0.5rem;
+    -webkit-user-drag: none;
 }
 
 .button-select-promo {
@@ -258,19 +262,36 @@
 }
 
 @media (max-width: 768px) {
+    
+    .carousel-wrapper {
+        width: 80%;
+    }
+
     .carousel-track {
         max-width: 100vw;
         padding: 0 1rem;
     }
 
     .plan-container-map {
-        flex: 0 0 85vw;
-        /* Mostrar una y parte de otra */
+        flex: 0 0 80%;
         margin-right: 1rem;
+        margin-left: 1rem;
+        scroll-snap-align: center;
     }
 
     .plan-container {
         width: 100%;
+        min-height: 55dvh;
+    }
+
+    .paragraph {
+        font-size: 0.8rem;
+        line-height: 1.2rem;
+        height: 80px;
+    }
+
+    .gb-data-container {
+        height: 3.5rem;
     }
 
     .nav-button.left {
@@ -279,6 +300,11 @@
 
     .nav-button.right {
         right: 0;
+    }
+    
+    .carousel-inner {
+        padding-left: 10%;
+        padding-right: 10%;
     }
 }
 </style>

@@ -323,5 +323,14 @@ function endDrag(event: MouseEvent | TouchEvent) {
     .btn-play-pause {
         display: none;
     }
+    
+    .carousel {
+        position: relative;
+        width: 100%;
+        max-width: 1000px;
+        min-width: 0;
+        height: auto;
+        aspect-ratio: 30 / 11;
+    }
 }
 </style>
