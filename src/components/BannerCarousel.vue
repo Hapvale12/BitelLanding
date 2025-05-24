@@ -56,30 +56,30 @@ let interval: ReturnType<typeof setInterval>;
 
 const isPlaying = ref(true);
 function next() {
-  transitionClass.value = 'slide-in-right';
-  exitTransitionClass.value = 'slide-out-left';
-  previousIndex.value = currentIndex.value;
-  currentIndex.value = (currentIndex.value + 1) % images.length;
+    transitionClass.value = 'slide-in-right';
+    exitTransitionClass.value = 'slide-out-left';
+    previousIndex.value = currentIndex.value;
+    currentIndex.value = (currentIndex.value + 1) % images.length;
 }
 
 function prev() {
-  exitTransitionClass.value = 'slide-out-right';
-  transitionClass.value = 'slide-in-left';
-  previousIndex.value = currentIndex.value;
-  currentIndex.value = (currentIndex.value - 1 + images.length) % images.length;
+    exitTransitionClass.value = 'slide-out-right';
+    transitionClass.value = 'slide-in-left';
+    previousIndex.value = currentIndex.value;
+    currentIndex.value = (currentIndex.value - 1 + images.length) % images.length;
 }
 
 function goTo(index: number) {
-  if (index === currentIndex.value) return;
-  exitTransitionClass.value = index > currentIndex.value ? 'slide-out-left' : 'slide-out-right';
-  transitionClass.value = index > currentIndex.value ? 'slide-in-right' : 'slide-in-left';
-  previousIndex.value = currentIndex.value;
-  currentIndex.value = index;
+    if (index === currentIndex.value) return;
+    exitTransitionClass.value = index > currentIndex.value ? 'slide-out-left' : 'slide-out-right';
+    transitionClass.value = index > currentIndex.value ? 'slide-in-right' : 'slide-in-left';
+    previousIndex.value = currentIndex.value;
+    currentIndex.value = index;
 }
 
 function resetTransitionClass() {
-  transitionClass.value = '';
-  exitTransitionClass.value = '';
+    transitionClass.value = '';
+    exitTransitionClass.value = '';
 }
 
 function startAutoplay() {
@@ -136,7 +136,6 @@ function endDrag(event: MouseEvent | TouchEvent) {
 </script>
 
 <style scoped>
-
 .carousel-container {
     display: flex;
     justify-content: center;
@@ -324,7 +323,7 @@ function endDrag(event: MouseEvent | TouchEvent) {
     .btn-play-pause {
         display: none;
     }
-    
+
     .carousel {
         position: relative;
         width: 100%;

@@ -112,6 +112,7 @@ function toggleMenu() {
 
 .logo img {
     height: 50px;
+    -webkit-user-drag: none;
 }
 
 .navbar-top {

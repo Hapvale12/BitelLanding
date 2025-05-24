@@ -9,14 +9,14 @@
 
                     <!-- Tu estructura de tarjeta -->
                     <div class="plan-container">
-                        <header class="header-select-plan">{{ plan.plan_nombre }} x S/. {{ plan.precio_referencia }}
+                        <header class="header-select-plan">{{ plan.plan_nombre }} x S/. {{ plan.precio_referencia.toFixed(2) }}
                         </header>
                         <div class="gb-data-container">
                             <h1 class="gb-tittle">+{{ plan.gb_alta_velocidad }} GB</h1>
                             <h2 class="gb-text">En alta velocidad</h2>
                         </div>
                         <div class="price-data-container">
-                            <h1 class="month-discount">S/ {{ plan.precio_descuento }}</h1>
+                            <h1 class="month-discount">S/ {{ plan.precio_descuento.toFixed(2) }}</h1>
                             <h2 class="gb-text">{{ plan.descuento_porcentaje }}% dscto. por {{ plan.meses_descuento }}
                                 meses</h2>
                         </div>
@@ -29,7 +29,9 @@
                             <img :src="images[0]" alt="Paramount+" width="40" height="28" />
                             <img :src="images[1]" alt="Bitel TV" width="35" height="30" />
                         </div>
-                        <button class="button-select-promo">Solicítalo aquí</button>
+                        <a class="button-select-promo" :href="plan.url_solicitud" target="_blank">
+                            Solicítalo aquí
+                        </a>
                     </div>
                 </div>
             </div>
@@ -106,7 +108,7 @@
     border-radius: 0.5rem;
     border: 0.09rem solid #21bdbb;
     overflow: hidden;
-    min-height: 65dvh;
+    min-height: 525px;
 }
 
 .nav-button {
@@ -175,7 +177,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #f2fbfb;
+    background-color: #e7f1f1;
 }
 
 .gb-tittle {
@@ -195,8 +197,8 @@
 
 .month-discount {
     color: #057689;
-    background-color: #f2fbfb;
-    font-size: 1.3rem;
+    background-color: #e7f1f1;
+    font-size: 1.5rem;
     font-weight: 700;
     line-height: 2.4rem;
     width: 100%;
@@ -212,7 +214,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    background-color: #f2fbfb;
+    background-color: #e7f1f1;
     width: 100%;
 }
 
@@ -262,7 +264,7 @@
 }
 
 @media (max-width: 768px) {
-    
+
     .carousel-wrapper {
         width: 80%;
     }
@@ -301,7 +303,7 @@
     .nav-button.right {
         right: 0;
     }
-    
+
     .carousel-inner {
         padding-left: 10%;
         padding-right: 10%;
@@ -318,17 +320,17 @@ import bitel_tv from '../assets/bitel_tv.png';
 const slideWidth = ref(getSlideWidth());
 
 function getSlideWidth() {
-  return window.innerWidth <= 768 ? window.innerWidth * 0.85 + 16 : 18.5 * 16 + 7.5;
+    return window.innerWidth <= 768 ? window.innerWidth * 0.85 + 16 : 18.5 * 16 + 7.5;
 }
 
 window.addEventListener('resize', () => {
-  slideWidth.value = getSlideWidth();
+    slideWidth.value = getSlideWidth();
 });
 
 const trackStyle = computed(() => ({
-  transform: `translateX(-${currentIndex.value * slideWidth.value}px)`,
-  transition: isTransitioning.value ? 'transform 0.3s ease-in-out' : 'none',
-  display: 'flex',
+    transform: `translateX(-${currentIndex.value * slideWidth.value}px)`,
+    transition: isTransitioning.value ? 'transform 0.3s ease-in-out' : 'none',
+    display: 'flex',
 }));
 
 const isTransitioning = ref(false);

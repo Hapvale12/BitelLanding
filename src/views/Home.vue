@@ -3,14 +3,13 @@
         <BannerCarousel />
     </div>
     <div>
-        <PlansCarousel />
+        <PlansMovilCarousel />
     </div>
 
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import BannerCarousel from '../components/BannerCarousel.vue';
-import PlansCarousel from '../components/PlansCarousel.vue';
+import PlansMovilCarousel from '../components/PlansMovilCarousel.vue';
+
 </script>
