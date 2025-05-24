@@ -5,7 +5,6 @@
     <div>
         <PlansMovilCarousel />
     </div>
-
 </template>
 
 <script setup lang="ts">

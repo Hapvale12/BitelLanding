@@ -7,8 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+
 import BannerCarousel from '../components/BannerCarousel.vue';
 import PlansFibraCarousel from '../components/PlansFibraCarousel.vue';
 

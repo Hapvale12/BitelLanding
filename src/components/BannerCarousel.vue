@@ -28,7 +28,7 @@
             <!-- Indicadores y botón pausa/play -->
             <div class="controls-bottom">
                 <div class="indicators">
-                    <span v-for="(image, index) in images" :key="index" class="dot"
+                    <span v-for="(_, index) in images" :key="index" class="dot"
                         :class="{ active: index === currentIndex }" @click="goTo(index)"
                         :aria-label="`Ir a imagen ${index + 1}`"></span>
                 </div>
@@ -123,7 +123,7 @@ function onDrag(event: TouchEvent) {
     }
 }
 
-function endDrag(event: MouseEvent | TouchEvent) {
+function endDrag() {
     if (!dragging.value) return;
     dragging.value = false;
     if (dragDeltaX.value > 50) {

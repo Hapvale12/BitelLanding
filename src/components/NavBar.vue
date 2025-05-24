@@ -12,11 +12,11 @@
         </div>
 
         <nav class="nav-links" :class="{ open: menuOpen }">
-            <a href="#" class="nav-button" @click.prevent="handleClick($event, '/')"
+            <a href="#" class="nav-button" @click.prevent="handleClick('/')"
                 :class="{ loading: activePath === '/' }">
                 Cámbiate a Bitel
             </a>
-            <a href="#" class="nav-button" @click.prevent="handleClick($event, '/fibra')"
+            <a href="#" class="nav-button" @click.prevent="handleClick('/fibra')"
                 :class="{ loading: activePath === '/fibra' }">
                 Fibra Óptica
             </a>
@@ -32,7 +32,7 @@ const router = useRouter();
 const activePath = ref<string | null>(null);
 const menuOpen = ref(false);
 
-function handleClick(event: Event, path: string) {
+function handleClick(path: string) {
     if (activePath.value) return;
     activePath.value = path;
     setTimeout(() => {
