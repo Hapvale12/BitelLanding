@@ -61,33 +61,33 @@ onUnmounted(() => {
     window.removeEventListener('resize', handleResize);
 });
 
+// Beneficios: 
+// 200 mbps velocidad 
+// 101 canales cable go 
+// Películas y series paramount +
+// Liga 1 Max TV360
+
 const plans = [
     {
         plan_nombre: "Bitel Fibra",
-        precio: 55.9,
+        precio: 55,
         gb_alta_velocidad: 200,
-        meses_descuento: 12,
         descripcion: "Plan todo ilimitado: llamadas, SMS, internet, más 60 GB en alta velocidad y 30 GB para TikTok.",
-        suscripcion_incluida: "Paramount+ y BITEL TV 360",
-        duracion_suscripcion: "6 meses"
+        suscripcion_incluida: "Paramount+ y BITEL TV 360"
     },
     {
         plan_nombre: "Bitel Fibra",
         precio: 69.9,
         gb_alta_velocidad: 400,
-        meses_descuento: 12,
         descripcion: "Plan todo ilimitado: llamadas, SMS, internet. Incluye suscripción a plataformas de streaming.",
-        suscripcion_incluida: "Paramount+ y BITEL TV 360",
-        duracion_suscripcion: "6 meses"
+        suscripcion_incluida: "Paramount+ y BITEL TV 360"
     },
     {
         plan_nombre: "Bitel Fibra",
         precio: 79.9,
         gb_alta_velocidad: 1000,
-        meses_descuento: 12,
         descripcion: "Plan todo ilimitado: llamadas, SMS, internet, más 60 GB en alta velocidad y 30 GB para TikTok.",
-        suscripcion_incluida: "Paramount+ y BITEL TV 360",
-        duracion_suscripcion: "6 meses"
+        suscripcion_incluida: "Paramount+ y BITEL TV 360"
     }
 ];
 
