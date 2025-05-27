@@ -1,101 +1,107 @@
 <template>
-    <div class="carousel-wrapper">
-        <div class="carousel-track">
-            <div class="carousel-inner" :style="trackStyle">
-                <div v-for="(plan, index) in extendedPlans" :key="plan.plan_nombre + index" class="plan-container-map">
-                    <div class="plan-container">
-                        <header class="header-select-plan">
-                            {{ plan.plan_nombre }} {{ plan.gb_alta_velocidad }}
-                        </header>
-                        <div class="gb-data-container">
-                            <h1 class="gb-tittle">{{ plan.gb_alta_velocidad }} Mbps</h1>
-                            <h2 class="gb-text">100% Fibra Óptica</h2>
-                        </div>
-                        <div class="price-data-container">
-                            <h1 class="month-discount">S/ {{ plan.precio.toFixed(2) }}</h1>
-                            <h2 class="gb-text">Mensual
-                            </h2>
-                        </div>
-                        <p class="paragraph">{{ plan.descripcion }}</p>
-                        <div class="suscription-container">
-                            <h1 class="suscription">{{ plan.suscripcion_incluida }}</h1>
-                        </div>
-                        <div class="images-container">
-                            <img :src="paramount" alt="Logo de Paramount+" width="40" height="28" />
-                            <img :src="bitel_tv" alt="Logo de Bitel TV" width="35" height="30" />
-                            <img :src="cable_go" alt="Logo de Cable GO" width="35" height="30" />
-                        </div>
+    <Swiper :pagination="{ clickable: true }" :navigation="{ nextEl: '.custom-next', prevEl: '.custom-prev' }"
+        :modules="[Navigation, Pagination]" :loop="true" :breakpoints="{
+            960: {
+                slidesPerView: 3,
+                spaceBetween: 30,
 
-                        <h1 class="gb-text" style="color: black;">{{ plan.duracion_suscripcion }}</h1>
-                        <a class="button-select-promo" :href="plan.url_solicitud || '#'" target="_blank">
-                            Solicítalo aquí
-                        </a>
-                    </div>
+            },
+            700: {
+                slidesPerView:2
+            }
+        }">
+        <!-- Botones personalizados -->
+        <button class="custom-prev">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon-arrow" viewBox="-2 0 30 25" fill="none"
+                stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+            </svg>
+        </button>
+        <button class="custom-next">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon-arrow" viewBox="-4 0 30 25" fill="none"
+                stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+            </svg>
+        </button>
+        <SwiperSlide v-for="(plan, index) in plans" :key="index">
+            <div class="plan-container">
+                <header class="header-select-plan">
+                    {{ plan.plan_nombre }} {{ plan.gb_alta_velocidad }}
+                </header>
+
+                <div class="gb-data-container">
+                    <h1 class="gb-tittle">{{ plan.gb_alta_velocidad }} Mbps</h1>
+                    <h2 class="gb-text">100% Fibra Óptica</h2>
                 </div>
+
+                <div class="price-data-container">
+                    <h1 class="month-discount">S/ {{ plan.precio.toFixed(2) }}</h1>
+                    <h2 class="gb-text">Mensual</h2>
+                </div>
+
+                <p class="paragraph">{{ plan.descripcion }}</p>
+
+                <div class="suscription-container">
+                    <h1 class="suscription">{{ plan.suscripcion_incluida }}</h1>
+                </div>
+
+                <div class="images-container">
+                    <img :src="paramount" alt="Logo de Paramount+" width="40" height="28" />
+                    <img :src="bitel_tv" alt="Logo de Bitel TV" width="35" height="30" />
+                    <img :src="cable_go" alt="Logo de Cable GO" width="35" height="30" />
+                </div>
+
+                <h1 class="gb-text" style="color: black;">{{ plan.duracion_suscripcion }}</h1>
+
+                <a class="button-select-promo" :href="plan.url_solicitud || '#'" target="_blank">
+                    Solicítalo aquí
+                </a>
             </div>
-        </div>
-    </div>
+        </SwiperSlide>
+    </Swiper>
+
 </template>
 
 <script setup>
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/swiper-bundle.css';
 
-import { ref, computed, onMounted, onUnmounted } from 'vue';
 import paramount from '../assets/paramount.png';
 import bitel_tv from '../assets/bitel_tv.png';
 import cable_go from '../assets/cable_go.png';
 
-const slideWidth = ref(getSlideWidth());
-
-function getSlideWidth() {
-    return window.innerWidth <= 768 ? window.innerWidth * 0.85 + 16 : 18.5 * 16 + 7.5;
-}
-
-function handleResize() {
-    slideWidth.value = getSlideWidth();
-}
-
-onMounted(() => {
-    window.addEventListener('resize', handleResize);
-});
-onUnmounted(() => {
-    window.removeEventListener('resize', handleResize);
-});
-
-// Beneficios: 
-// 200 mbps velocidad 
-// 101 canales cable go 
-// Películas y series paramount +
-// Liga 1 Max TV360
-
 const plans = [
     {
-        plan_nombre: "Bitel Fibra",
+        plan_nombre: 'Bitel Fibra',
         precio: 55,
         gb_alta_velocidad: 200,
-        descripcion: "Plan todo ilimitado: llamadas, SMS, internet, más 60 GB en alta velocidad y 30 GB para TikTok.",
-        suscripcion_incluida: "Paramount+ y BITEL TV 360"
+        descripcion: 'Plan todo ilimitado: llamadas, SMS, internet, más 60 GB en alta velocidad y 30 GB para TikTok.',
+        suscripcion_incluida: 'Paramount+ y BITEL TV 360',
+        duracion_suscripcion: '12 meses',
+        url_solicitud: '',
     },
     {
-        plan_nombre: "Bitel Fibra",
+        plan_nombre: 'Bitel Fibra',
         precio: 69.9,
         gb_alta_velocidad: 400,
-        descripcion: "Plan todo ilimitado: llamadas, SMS, internet. Incluye suscripción a plataformas de streaming.",
-        suscripcion_incluida: "Paramount+ y BITEL TV 360"
+        descripcion: 'Plan todo ilimitado: llamadas, SMS, internet. Incluye suscripción a plataformas de streaming.',
+        suscripcion_incluida: 'Paramount+ y BITEL TV 360',
+        duracion_suscripcion: '12 meses',
+        url_solicitud: '',
     },
     {
-        plan_nombre: "Bitel Fibra",
+        plan_nombre: 'Bitel Fibra',
         precio: 79.9,
         gb_alta_velocidad: 1000,
-        descripcion: "Plan todo ilimitado: llamadas, SMS, internet, más 60 GB en alta velocidad y 30 GB para TikTok.",
-        suscripcion_incluida: "Paramount+ y BITEL TV 360"
+        descripcion: 'Plan todo ilimitado: llamadas, SMS, internet, más 60 GB en alta velocidad y 30 GB para TikTok.',
+        suscripcion_incluida: 'Paramount+ y BITEL TV 360',
+        duracion_suscripcion: '12 meses',
+        url_solicitud: '',
     }
+
+    
 ];
-
-const extendedPlans = computed(() => plans);
-
-const trackStyle = computed(() => ({
-    transform: `translateX(0px)`,
-}));
 </script>
 
 <style scoped>
@@ -118,22 +124,53 @@ const trackStyle = computed(() => ({
     font-family: BreeCFApp, sans-serif;
 }
 
-.carousel-wrapper {
-    padding: 20px 0;
-    display: flex;
-    align-items: center;
+.custom-prev,
+.custom-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    background-color: #057689;
+    color: white;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: none;
     justify-content: center;
-    gap: 1rem;
-    margin: 0 auto;
-    overflow: visible;
-    position: relative;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
+.custom-prev:hover,
+.custom-next:hover {
+    background-color: #a8a8a8;
+    transform: translateY(-50%) scale(1.05);
+}
+
+.custom-prev {
+    left: 5px;
+}
+
+.custom-next {
+    right: 5px;
+}
+
+
+.swiper {
+    max-width: 900px;
+}
+
 
 /* Ajustar el ancho del track para que encaje con los botones */
 
 .carousel-track {
     overflow: hidden;
-    width: 100%;
+    width: 80%;
     position: relative;
 }
 
@@ -156,16 +193,26 @@ const trackStyle = computed(() => ({
 }
 
 .plan-container {
-    background-color: #fff;
+    max-width: 320px;
+    margin: 0 auto;
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
+    border: 2px solid #21bdbb;
     justify-content: space-between;
     align-items: center;
-    border-radius: 0.5rem;
-    border: 0.09rem solid #21bdbb;
+    background-color: #ffffff;
     overflow: hidden;
-    min-height: 525px;
-    width: 100%;
+    min-height: 500px;
+}
+
+.swiper {
+    padding: 10px 0 40px 0;
 }
 
 .nav-button {
@@ -284,6 +331,7 @@ const trackStyle = computed(() => ({
 }
 
 .button-select-promo {
+    text-align: center;
     padding: 0.6rem 0;
     background-color: #057689;
     width: 9rem;
@@ -307,7 +355,23 @@ const trackStyle = computed(() => ({
     padding: 0.5rem 1rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 960px) {
+
+    .custom-prev {
+        width: 36px;
+        height: 36px;
+        font-size: 1.3rem;
+        left: 5px;
+        display: flex;
+    }
+
+    .custom-next {
+        width: 36px;
+        height: 36px;
+        font-size: 1.3rem;
+        right: 5px;
+        display: flex;
+    }
 
     .carousel-wrapper {
         width: 80%;
@@ -316,6 +380,10 @@ const trackStyle = computed(() => ({
     .carousel-track {
         max-width: 100vw;
         padding: 0 1rem;
+    }
+
+    .swiper {
+        width: 100%;
     }
 
     .plan-container-map {
@@ -336,16 +404,8 @@ const trackStyle = computed(() => ({
         height: 80px;
     }
 
-    .gb-data-container {
-        height: 3.5rem;
-    }
-
     .carousel-inner {
         justify-content: center;
-        /* CENTRADO EN MÓVIL TAMBIÉN */
-        padding-left: 0;
-        /* OPCIONAL: elimina padding si descuadra */
-        padding-right: 0;
     }
 
     .images-container {

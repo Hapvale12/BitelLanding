@@ -139,8 +139,11 @@ function endDrag() {
 .carousel-container {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
-    padding: 0 16px;
+    align-items: center; /* opcional */
+    margin: 25px 0 20px 0;
+    overflow: hidden;
+    width: 100%;
+    padding: 15px 0;
 }
 
 .carousel {
@@ -150,7 +153,6 @@ function endDrag() {
     min-width: 0;
     height: auto;
     aspect-ratio: 30 / 10;
-    overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     background: linear-gradient(90deg, #fdf100, #000);
@@ -309,6 +311,15 @@ function endDrag() {
     background: rgba(255, 255, 255, 1);
 }
 
+@media (max-width: 1060px) {
+
+    .carousel {
+        
+    max-width: 90%;
+    }
+    
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
     .arrow {
@@ -325,12 +336,11 @@ function endDrag() {
     }
 
     .carousel {
-        position: relative;
         width: 100%;
-        max-width: 1000px;
+        padding: 0 16px;
         min-width: 0;
         height: auto;
-        aspect-ratio: 30 / 11;
+        aspect-ratio: 30 / 11.5;
     }
 }
 </style>

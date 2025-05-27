@@ -13,11 +13,13 @@ import PlansFibraCarousel from '../components/PlansFibraCarousel.vue';
 
 </script>
 
-<style scoped>
+<style>
 .fibra-container {
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
     background-color: #fdf100;
 }
 
