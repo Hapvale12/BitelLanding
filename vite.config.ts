@@ -7,7 +7,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         entryFileNames: `index.js`,
-        chunkFileNames: `index.js`, // si no tienes código dividido, este también puede ir
+        chunkFileNames: `index.js`,
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) {
             return 'index.css';
@@ -18,4 +18,3 @@ export default defineConfig({
     }
   }
 });
-// Este archivo es la configuración de Vite para el proyecto Vue.js.

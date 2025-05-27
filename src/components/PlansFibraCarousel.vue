@@ -25,7 +25,7 @@
                             <img :src="bitel_tv" alt="Logo de Bitel TV" width="35" height="30" />
                             <img :src="cable_go" alt="Logo de Cable GO" width="35" height="30" />
                         </div>
-                        
+
                         <h1 class="gb-text" style="color: black;">{{ plan.duracion_suscripcion }}</h1>
                         <a class="button-select-promo" :href="plan.url_solicitud || '#'" target="_blank">
                             Solicítalo aquí
@@ -139,7 +139,8 @@ const trackStyle = computed(() => ({
 
 .carousel-inner {
     display: flex;
-    justify-content: center; /* AÑADIDO PARA CENTRAR LOS PLANES */
+    justify-content: center;
+    /* AÑADIDO PARA CENTRAR LOS PLANES */
     gap: 3rem;
     transition: all 0.3s ease-in-out;
 }
@@ -326,7 +327,7 @@ const trackStyle = computed(() => ({
 
     .plan-container {
         width: 100%;
-        min-height: 55dvh;
+        min-height: 55vh;
     }
 
     .paragraph {
@@ -340,8 +341,10 @@ const trackStyle = computed(() => ({
     }
 
     .carousel-inner {
-        justify-content: center; /* CENTRADO EN MÓVIL TAMBIÉN */
-        padding-left: 0; /* OPCIONAL: elimina padding si descuadra */
+        justify-content: center;
+        /* CENTRADO EN MÓVIL TAMBIÉN */
+        padding-left: 0;
+        /* OPCIONAL: elimina padding si descuadra */
         padding-right: 0;
     }
 
