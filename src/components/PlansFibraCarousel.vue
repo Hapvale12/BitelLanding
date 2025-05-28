@@ -4,10 +4,9 @@
             960: {
                 slidesPerView: 3,
                 spaceBetween: 30,
-
             },
             700: {
-                slidesPerView:2
+                slidesPerView: 2
             }
         }">
         <!-- Botones personalizados -->
@@ -53,23 +52,36 @@
 
                 <h1 class="gb-text" style="color: black;">{{ plan.duracion_suscripcion }}</h1>
 
-                <a class="button-select-promo" :href="plan.url_solicitud || '#'" target="_blank">
+                <button class="button-select-promo" @click="openModal(plan)">
                     Solicítalo aquí
-                </a>
+                </button>
             </div>
         </SwiperSlide>
     </Swiper>
 
+    
+    <Modal v-model:modelValue="showModal">
+      <FormFibra :plan="selectedPlan" />
+    </Modal>
 </template>
 
 <script setup>
+
+import { ref } from 'vue';
+
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 
+import FormFibra from './FormFibra.vue';
+import Modal from './Modal.vue';
+
 import paramount from '../assets/paramount.png';
 import bitel_tv from '../assets/bitel_tv.png';
 import cable_go from '../assets/cable_go.png';
+
+const showModal = ref(false);
+const selectedPlan = ref(null);
 
 const plans = [
     {
@@ -99,9 +111,14 @@ const plans = [
         duracion_suscripcion: '12 meses',
         url_solicitud: '',
     }
-
-    
 ];
+
+function openModal(plan) {
+    selectedPlan.value = plan;
+    showModal.value = true;
+    // alert(`Has seleccionado el plan: ${plan.plan_nombre} con ${plan.gb_alta_velocidad} Mbps por S/ ${plan.precio.toFixed(2)} al mes.`);
+}
+
 </script>
 
 <style scoped>

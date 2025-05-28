@@ -3,13 +3,14 @@
         <BannerCarousel />
         <PlansFibraCarousel />
     </div>
-
+    <FooterFibra />
 </template>
 
 <script setup lang="ts">
 
 import BannerCarousel from '../components/BannerCarousel.vue';
 import PlansFibraCarousel from '../components/PlansFibraCarousel.vue';
+import FooterFibra from '../components/FooterFibra.vue';
 
 </script>
 
@@ -22,5 +23,4 @@ import PlansFibraCarousel from '../components/PlansFibraCarousel.vue';
     width: 100%;
     background-color: #fdf100;
 }
-
 </style>
