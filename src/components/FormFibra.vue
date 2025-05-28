@@ -23,7 +23,7 @@
 
                     <h2 class="title-data">Ingresa tus Datos</h2>
                     <form @submit.prevent="continuar()" novalidate>
-                        <div v-if="step === 1">
+                        <div v-if="step === 1" class="form-grid">
                             <!-- Inputs declarados uno a uno -->
                             <div class="form-group">
                                 <label for="dni">{{ getLabel('dni') }}</label>
@@ -63,10 +63,6 @@
                                 <small v-if="errors.correo" class="error-msg">{{ getErrorMessage('correo') }}</small>
                             </div>
 
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="autorizo" v-model="formStep1.autorizo" />
-                                <label for="autorizo">Autorizo el uso de mis datos personales.</label>
-                            </div>
                         </div>
 
                         <div v-else>
@@ -88,6 +84,10 @@
                         </div>
 
 
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="autorizo" v-model="formStep1.autorizo" />
+                            <label for="autorizo">Autorizo el uso de mis datos personales.</label>
+                        </div>
                         <div class="button-container">
                             <button type="submit">{{ step === 1 ? 'Siguiente' : 'Enviar' }}</button>
                         </div>
@@ -146,7 +146,7 @@ document.addEventListener('keydown', (event) => {
     if (event.ctrlKey) {
         console.log(ubigeoData.value);
         console.log('Hotkey pressed!');
-        
+
     }
 })
 
@@ -254,6 +254,10 @@ function continuar() {
     font-weight: 400;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 .form-container {
     margin: auto;
     font-family: 'BreeCFApp', sans-serif;
@@ -295,6 +299,7 @@ h1 {
     color: #057689;
     text-align: center;
     font-size: 35px;
+    margin: 10px 0;
 }
 
 .title {
@@ -429,11 +434,28 @@ h1 {
     opacity: 0;
 }
 
-@media (max-width: 600px) {
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* Que los elementos ocupen una sola columna si es necesario */
+.form-grid .form-group,
+.form-grid .checkbox-group {
+    width: 100%;
+}
+
+@media (max-width: 800px) {
     .modal-content {
         width: 90%;
         max-width: none;
         border-radius: 10px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr;
     }
 
     .form-container {
@@ -441,7 +463,7 @@ h1 {
     }
 
     h1 {
-        font-size: 24px;
+        font-size: 28px;
     }
 
     .title {
