@@ -1,6 +1,7 @@
 <template>
     <transition name="modal-fade">
-        <div v-if="modelValue" class="modal-overlay" @click.self="close">
+        <!--@click.self="close"-->
+        <div v-if="modelValue" class="modal-overlay">
             <div class="modal-content">
 
                 <button class="close-btn" @click="close" aria-label="Cerrar">
@@ -21,16 +22,47 @@
                     </div>
 
                     <h2 class="title-data">Ingresa tus Datos</h2>
-                    <form @submit.prevent="continuar">
+                    <form @submit.prevent="continuar()" novalidate>
                         <div v-if="step === 1">
-                            <div class="form-group"
-                                v-for="([key, value]) in Object.entries(formStep1).filter(([k]) => k !== 'autorizo')"
-                                :key="key">
-                                <label :for="key">{{ getLabel(key) }}</label>
-                                <input :type="getInputType(key)" :id="key" v-model="formStep1[key]"
-                                    :maxlength="getMaxLength(key - 1)" :class="{ invalid: errors[key] }" required />
-                                <small v-if="errors[key]" class="error-msg">{{ getErrorMessage(key) }}</small>
+                            <!-- Inputs declarados uno a uno -->
+                            <div class="form-group">
+                                <label for="dni">{{ getLabel('dni') }}</label>
+                                <input type="tel" id="dni" v-model="formStep1.dni" :maxlength="getMaxLength('dni')"
+                                    :class="{ invalid: errors.dni }" required />
+                                <small v-if="errors.dni" class="error-msg">{{ getErrorMessage('dni') }}</small>
                             </div>
+
+                            <div class="form-group">
+                                <label for="telefono">{{ getLabel('telefono') }}</label>
+                                <input type="tel" id="telefono" v-model="formStep1.telefono"
+                                    :maxlength="getMaxLength('telefono')" :class="{ invalid: errors.telefono }"
+                                    required />
+                                <small v-if="errors.telefono" class="error-msg">{{ getErrorMessage('telefono')
+                                }}</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nombre">{{ getLabel('nombre') }}</label>
+                                <input type="text" id="nombre" v-model="formStep1.nombre"
+                                    :class="{ invalid: errors.nombre }" required />
+                                <small v-if="errors.nombre" class="error-msg">{{ getErrorMessage('nombre') }}</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="apellido">{{ getLabel('apellido') }}</label>
+                                <input type="text" id="apellido" v-model="formStep1.apellido"
+                                    :class="{ invalid: errors.apellido }" required />
+                                <small v-if="errors.apellido" class="error-msg">{{ getErrorMessage('apellido')
+                                }}</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="correo">{{ getLabel('correo') }}</label>
+                                <input type="email" id="correo" v-model="formStep1.correo"
+                                    :class="{ invalid: errors.correo }" required />
+                                <small v-if="errors.correo" class="error-msg">{{ getErrorMessage('correo') }}</small>
+                            </div>
+
                             <div class="checkbox-group">
                                 <input type="checkbox" id="autorizo" v-model="formStep1.autorizo" />
                                 <label for="autorizo">Autorizo el uso de mis datos personales.</label>
@@ -38,11 +70,23 @@
                         </div>
 
                         <div v-else>
-                            <div class="form-group" v-for="(value, key) in formStep2" :key="key">
-                                <label :for="key">{{ getLabel(key) }}</label>
-                                <input type="text" :id="key" v-model="formStep2[key]" required />
+                            <!-- Para step 2 también sin v-for -->
+                            <div class="form-group">
+                                <label for="provincia">{{ getLabel('provincia') }}</label>
+                                <input type="text" id="provincia" v-model="formStep2.provincia" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ciudad">{{ getLabel('ciudad') }}</label>
+                                <input type="text" id="ciudad" v-model="formStep2.ciudad" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="distrito">{{ getLabel('distrito') }}</label>
+                                <input type="text" id="distrito" v-model="formStep2.distrito" required />
                             </div>
                         </div>
+
 
                         <div class="button-container">
                             <button type="submit">{{ step === 1 ? 'Siguiente' : 'Enviar' }}</button>
@@ -55,7 +99,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
+import ubigeo from '../assets/ubigeo.js';
+// Componente para el formulario de Fibra
 
 const props = defineProps({
     modelValue: Boolean,
@@ -69,6 +115,8 @@ function close() {
 
 const plan = ref({ name: 'Plan Básico' })
 const step = ref(1)
+const ubigeoData = ref(ubigeo);
+// Datos del formulario
 
 const formStep1 = ref({
     dni: '',
@@ -80,9 +128,9 @@ const formStep1 = ref({
 })
 
 const formStep2 = ref({
-    direccion: '',
-    referencia: '',
     distrito: '',
+    provincia: '',
+    ciudad: ''
 })
 
 const errors = ref({
@@ -91,6 +139,15 @@ const errors = ref({
     nombre: false,
     apellido: false,
     correo: false,
+})
+
+// funcion hotkey para ejecutar funcion console.log('Hotkey pressed!')
+document.addEventListener('keydown', (event) => {
+    if (event.ctrlKey) {
+        console.log(ubigeoData.value);
+        console.log('Hotkey pressed!');
+        
+    }
 })
 
 function getLabel(key) {
@@ -137,10 +194,16 @@ function validarFormularioPaso1() {
     errors.value.apellido = !/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s\-]+$/.test(formStep1.value.apellido)
     errors.value.correo = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formStep1.value.correo)
 
+    // Mostrar error si el checkbox no está marcado
+    if (!formStep1.value.autorizo) {
+        return false
+    }
+
     return !Object.values(errors.value).some(Boolean)
 }
 
 function continuar() {
+    // Validar el paso 1 antes de continuar al paso 2
     if (step.value === 1) {
         if (validarFormularioPaso1()) {
             step.value = 2
@@ -173,6 +236,8 @@ function continuar() {
         close()
     }
 }
+
+
 </script>
 
 
