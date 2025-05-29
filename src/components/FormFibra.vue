@@ -294,11 +294,11 @@ function validarFormularioPaso2() {
 function continuar() {
     // Validar el paso 1 antes de continuar al paso 2
     if (step.value === 1) {
-        if (!validarFormularioPaso1()) {
+        if (validarFormularioPaso1()) {
             step.value = 2
         }
     } else {
-        if (!validarFormularioPaso2()) {
+        if (validarFormularioPaso2()) {
             formStep2.value.departamento = formStep2.value.departamento.nombre_ubigeo || '';
             formStep2.value.provincia = formStep2.value.provincia.nombre_ubigeo || '';
             formStep2.value.distrito = formStep2.value.distrito.nombre_ubigeo || '';
@@ -317,7 +317,7 @@ function continuar() {
 
             // Mostrar modal de éxito
             mostrarConfirmacion()
-            
+
             // Cerrar modal principal después de un tiempo
             setTimeout(() => {
                 // showSuccessModal.value = false
