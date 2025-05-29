@@ -7,10 +7,12 @@
             </transition>
         </main>
     </div>
+    <FloatingContactButtons phone="51999999999" />
 </template>
 
 <script setup lang="ts">
 import Navbar from './components/NavBar.vue';
+import FloatingContactButtons from './components/FloatingContactButtons.vue';
 </script>
 
 <style>
