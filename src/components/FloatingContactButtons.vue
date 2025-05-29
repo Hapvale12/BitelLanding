@@ -16,7 +16,7 @@
       </a>
   
       <a
-        :href="`tel:${phone}`"
+        :href="`tel:+${phone}`"
         class="button phone"
         title="Llamar por teléfono"
       >
@@ -35,7 +35,7 @@
     phone: {
       type: String,
       required: true,
-      default: '51999999999'
+      default: '51900375029'
     }
   })
   </script>
