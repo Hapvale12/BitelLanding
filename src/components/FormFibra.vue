@@ -210,7 +210,7 @@ function closeSuccessModal() {
 // Datos del formulario
 
 const formStep1 = ref({
-    plan: props.plan.name,
+    plan: '',
     dni: '',
     telefono: '',
     nombre: '',
