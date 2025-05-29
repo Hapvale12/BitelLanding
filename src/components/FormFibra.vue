@@ -299,11 +299,11 @@ function continuar() {
     
     if (step.value === 1) {
         formStep1.value.plan = props.plan.plan_nombre; 
-        if (!validarFormularioPaso1()) {
+        if (validarFormularioPaso1()) {
             step.value = 2
         }
     } else {
-        if (!validarFormularioPaso2()) {
+        if (validarFormularioPaso2()) {
             
             formStep2.value.departamento = formStep2.value.departamento.nombre_ubigeo || '';
             formStep2.value.provincia = formStep2.value.provincia.nombre_ubigeo || '';
