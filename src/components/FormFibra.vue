@@ -296,14 +296,14 @@ function validarFormularioPaso2() {
 }
 
 function continuar() {
-    // Validar el paso 1 antes de continuar al paso 2
+    
     if (step.value === 1) {
-        if (validarFormularioPaso1()) {
+        formStep1.value.plan = props.plan.plan_nombre; 
+        if (!validarFormularioPaso1()) {
             step.value = 2
         }
     } else {
-        if (validarFormularioPaso2()) {
-            formStep1.value.plan = props.plan.name; // Asignar el nombre del plan al formulario
+        if (!validarFormularioPaso2()) {
             
             formStep2.value.departamento = formStep2.value.departamento.nombre_ubigeo || '';
             formStep2.value.provincia = formStep2.value.provincia.nombre_ubigeo || '';
@@ -466,6 +466,7 @@ h1 {
     background-color: #057689;
     color: white;
     border-radius: 5px 5px 0 0;
+    font-family: 'BreeCFApp', sans-serif;
 }
 
 .title-data {
@@ -528,6 +529,7 @@ small.error-msg {
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s ease;
+    font-family: 'BreeCFApp', sans-serif;
 }
 
 .button-container button:hover {
