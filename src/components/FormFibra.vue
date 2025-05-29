@@ -162,7 +162,7 @@ function close() {
     step.value = 1
 
     formStep1.value = {
-        plan: props.plan.name,
+        plan: '',
         dni: '',
         telefono: '',
         nombre: '',
@@ -303,10 +303,12 @@ function continuar() {
         }
     } else {
         if (validarFormularioPaso2()) {
+            formStep1.value.plan = props.plan.name; // Asignar el nombre del plan al formulario
+            
             formStep2.value.departamento = formStep2.value.departamento.nombre_ubigeo || '';
             formStep2.value.provincia = formStep2.value.provincia.nombre_ubigeo || '';
             formStep2.value.distrito = formStep2.value.distrito.nombre_ubigeo || '';
-
+            
             const datosFinales = {
                 ...formStep1.value,
                 ...formStep2.value
