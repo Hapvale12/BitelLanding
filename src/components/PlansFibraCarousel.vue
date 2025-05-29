@@ -1,123 +1,118 @@
 <template>
-    <Swiper
-      :pagination="{ clickable: true }"
-      :navigation="{ nextEl: '.custom-next', prevEl: '.custom-prev' }"
-      :modules="[Navigation, Pagination]"
-      :loop="true"
-      :breakpoints="{
-        960: {
-          slidesPerView: 3,
-          spaceBetween: 30,
-        },
-        700: {
-          slidesPerView: 2
-        }
-      }"
-    >
-      <!-- Botones personalizados -->
-      <button class="custom-prev">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon-arrow" viewBox="-2 0 30 25" fill="none"
-          stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
-      </button>
-      <button class="custom-next">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon-arrow" viewBox="-4 0 30 25" fill="none"
-          stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
-      </button>
-  
-      <SwiperSlide v-for="(plan, index) in plans" :key="index">
-        <div class="plan-container">
-          <header class="header-select-plan">
-            {{ plan.plan_nombre }} {{ plan.gb_alta_velocidad }}
-          </header>
-  
-          <div class="gb-data-container">
-            <h1 class="gb-tittle">{{ plan.gb_alta_velocidad }} Mbps</h1>
-            <h2 class="gb-text">100% Fibra Óptica</h2>
-          </div>
-  
-          <div class="price-data-container">
-            <h1 class="month-discount">S/ {{ plan.precio.toFixed(2) }}</h1>
-            <h2 class="gb-text">Mensual</h2>
-          </div>
-  
-          <p class="paragraph">{{ plan.descripcion }}</p>
-  
-          <div class="suscription-container">
-            <h1 class="suscription">{{ plan.suscripcion_incluida }}</h1>
-          </div>
-  
-          <div class="images-container">
-            <img :src="paramount" alt="Logo de Paramount+" width="40" height="28" />
-            <img :src="bitel_tv" alt="Logo de Bitel TV" width="35" height="30" />
-            <img :src="cable_go" alt="Logo de Cable GO" width="35" height="30" />
-          </div>
-  
-          <h1 class="gb-text" style="color: black;">{{ plan.duracion_suscripcion }}</h1>
-  
-          <button class="button-select-promo" @click="openModal(plan)">
-            Solicítalo aquí
-          </button>
-        </div>
-      </SwiperSlide>
+    <Swiper :pagination="{ clickable: true }" :navigation="{ nextEl: '.custom-next', prevEl: '.custom-prev' }"
+        :modules="[Navigation, Pagination]" :loop="true" :breakpoints="{
+            960: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+            },
+            700: {
+                slidesPerView: 2
+            }
+        }">
+        <!-- Botones personalizados -->
+        <button class="custom-prev">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon-arrow" viewBox="-2 0 30 25" fill="none"
+                stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+            </svg>
+        </button>
+        <button class="custom-next">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon-arrow" viewBox="-4 0 30 25" fill="none"
+                stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+            </svg>
+        </button>
+
+        <SwiperSlide v-for="(plan, index) in plans" :key="index">
+            <div class="plan-container">
+                <header class="header-select-plan">
+                    {{ plan.plan_nombre }} {{ plan.gb_alta_velocidad }}
+                </header>
+
+                <div class="gb-data-container">
+                    <h1 class="gb-tittle">{{ plan.gb_alta_velocidad }} Mbps</h1>
+                    <h2 class="gb-text">100% Fibra Óptica</h2>
+                </div>
+
+                <div class="price-data-container">
+                    <h1 class="month-discount">S/ {{ plan.precio.toFixed(2) }}</h1>
+                    <h2 class="gb-text">Mensual</h2>
+                </div>
+
+                <p class="paragraph">{{ plan.descripcion }}</p>
+
+                <div class="suscription-container">
+                    <h1 class="suscription">{{ plan.suscripcion_incluida }}</h1>
+                </div>
+
+                <div class="images-container">
+                    <img :src="paramount" alt="Logo de Paramount+" width="40" height="28" />
+                    <img :src="bitel_tv" alt="Logo de Bitel TV" width="35" height="30" />
+                    <img :src="cable_go" alt="Logo de Cable GO" width="35" height="30" />
+                </div>
+
+                <h1 class="gb-text" style="color: black;">{{ plan.duracion_suscripcion }}</h1>
+
+                <button class="button-select-promo" @click="openModal(plan)">
+                    Solicítalo aquí
+                </button>
+            </div>
+        </SwiperSlide>
     </Swiper>
-  
-      <FormFibra :plan="selectedPlan" v-model:modelValue="showModal"/>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  import { Swiper, SwiperSlide } from 'swiper/vue';
-  import { Navigation, Pagination } from 'swiper/modules';
-  import 'swiper/swiper-bundle.css';
-    import FormFibra from './FormFibra.vue';
-  
-  import paramount from '../assets/paramount.png';
-  import bitel_tv from '../assets/bitel_tv.png';
-  import cable_go from '../assets/cable_go.png';
-  
-  const showModal = ref(false);
-  const selectedPlan = ref(null);
-  
-  const plans = [
+
+    <FormFibra :plan="selectedPlan" v-model:modelValue="showModal" />
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/swiper-bundle.css';
+import FormFibra from './FormFibra.vue';
+
+import paramount from '../assets/paramount.png';
+import bitel_tv from '../assets/bitel_tv.png';
+import cable_go from '../assets/cable_go.png';
+
+const showModal = ref(false);
+const selectedPlan = ref(null);
+
+const plans = [
     {
-      plan_nombre: 'Bitel Fibra',
-      precio: 55,
-      gb_alta_velocidad: 200,
-      descripcion: 'Plan todo ilimitado: llamadas, SMS, internet, más 60 GB en alta velocidad y 30 GB para TikTok.',
-      suscripcion_incluida: 'Paramount+ y BITEL TV 360',
-      duracion_suscripcion: '12 meses',
-      url_solicitud: '',
+        plan_nombre: 'Bitel Fibra',
+        precio: 55,
+        gb_alta_velocidad: 200,
+        descripcion: 'Plan todo ilimitado: llamadas, SMS, internet, más 60 GB en alta velocidad y 30 GB para TikTok.',
+        suscripcion_incluida: 'Paramount+ y BITEL TV 360',
+        duracion_suscripcion: '12 meses',
+        url_solicitud: '',
     },
     {
-      plan_nombre: 'Bitel Fibra',
-      precio: 69.9,
-      gb_alta_velocidad: 400,
-      descripcion: 'Plan todo ilimitado: llamadas, SMS, internet. Incluye suscripción a plataformas de streaming.',
-      suscripcion_incluida: 'Paramount+ y BITEL TV 360',
-      duracion_suscripcion: '12 meses',
-      url_solicitud: '',
+        plan_nombre: 'Bitel Fibra',
+        precio: 69.9,
+        gb_alta_velocidad: 400,
+        descripcion: 'Plan todo ilimitado: llamadas, SMS, internet. Incluye suscripción a plataformas de streaming.',
+        suscripcion_incluida: 'Paramount+ y BITEL TV 360',
+        duracion_suscripcion: '12 meses',
+        url_solicitud: '',
     },
     {
-      plan_nombre: 'Bitel Fibra',
-      precio: 79.9,
-      gb_alta_velocidad: 1000,
-      descripcion: 'Plan todo ilimitado: llamadas, SMS, internet, más 60 GB en alta velocidad y 30 GB para TikTok.',
-      suscripcion_incluida: 'Paramount+ y BITEL TV 360',
-      duracion_suscripcion: '12 meses',
-      url_solicitud: '',
+        plan_nombre: 'Bitel Fibra',
+        precio: 79.9,
+        gb_alta_velocidad: 1000,
+        descripcion: 'Plan todo ilimitado: llamadas, SMS, internet, más 60 GB en alta velocidad y 30 GB para TikTok.',
+        suscripcion_incluida: 'Paramount+ y BITEL TV 360',
+        duracion_suscripcion: '12 meses',
+        url_solicitud: '',
     }
-  ];
-  
-  function openModal(plan) {
+];
+
+function openModal(plan) {
     selectedPlan.value = plan;
     showModal.value = true;
-  }
-  </script>
-  
+}
+</script>
+
 
 <style scoped>
 @font-face {
@@ -163,7 +158,6 @@
 
 .custom-prev:hover,
 .custom-next:hover {
-    background-color: #a8a8a8;
     transform: translateY(-50%) scale(1.05);
 }
 
@@ -173,11 +167,6 @@
 
 .custom-next {
     right: 5px;
-}
-
-
-.swiper {
-    max-width: 900px;
 }
 
 
@@ -192,7 +181,6 @@
 .carousel-inner {
     display: flex;
     justify-content: center;
-    /* AÑADIDO PARA CENTRAR LOS PLANES */
     gap: 3rem;
     transition: all 0.3s ease-in-out;
 }
@@ -203,7 +191,6 @@
     border-radius: 8px;
     text-align: center;
     flex-shrink: 0;
-    /* Coincide con flex-basis para evitar salto */
     transition: transform 0.3s ease;
 }
 
@@ -228,6 +215,7 @@
 
 .swiper {
     padding: 10px 0 40px 0;
+    max-width: 900px;
 }
 
 .nav-button {
@@ -399,6 +387,7 @@
 
     .swiper {
         width: 100%;
+        margin-bottom: 10px;
     }
 
     .plan-container-map {

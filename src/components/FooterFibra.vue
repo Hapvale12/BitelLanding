@@ -12,7 +12,7 @@
                 </p>
 
                 <h3>Método de Pago</h3>
-                <p>
+                <p class="last-text">
                     El pago del servicio es <strong>por adelantado</strong>.<br>
                     El módem se brinda en comodato (préstamo).
                 </p>
@@ -89,7 +89,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
-    padding: 1rem 2rem;
+    padding: 20px 40px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -211,6 +211,10 @@ export default {
 
     .modal-content {
         width: 90%;
+    }
+
+    .last-text {
+        margin-bottom: 0;
     }
 }
 </style>

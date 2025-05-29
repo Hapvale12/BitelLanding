@@ -1,8 +1,8 @@
 <template>
     <div>
         <BannerCarousel />
+        <FooterCambiate />
     </div>
-    <FooterCambiate />
         <!-- <div> -->
             <!-- <PlansMovilCarousel /> -->
         <!-- </div> -->

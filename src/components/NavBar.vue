@@ -196,7 +196,7 @@ function toggleMenu() {
 /* SOLO móvil: */
 @media (max-width: 768px) {
     .navbar {
-        padding: 12px 16px;
+        padding: 0;
         flex-direction: column;
         align-items: stretch;
     }
@@ -220,11 +220,11 @@ function toggleMenu() {
 
     .nav-links.open {
         max-height: 200px;
-        /* Aumenta si hay más elementos */
         opacity: 1;
         transform: translateY(0);
+        transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
         pointer-events: auto;
-        padding-top: 12px;
+        padding: 12px;
     }
 
     .logo img {
@@ -235,6 +235,11 @@ function toggleMenu() {
         font-size: 18px;
         width: 100%;
         text-align: left;
+    }
+
+    .navbar-top {
+        padding: 8px 16px;
+        justify-content: space-between;
     }
 }
 </style>

@@ -198,7 +198,7 @@ function getProgressStyle(index: number) {
     justify-content: center;
     align-items: center;
     /* opcional */
-    margin: 25px 0 20px 0;
+    margin: 10px 0;
     overflow: hidden;
     width: 100%;
     padding: 15px 0;
@@ -211,11 +211,13 @@ function getProgressStyle(index: number) {
     max-width: 1000px;
     min-width: 0;
     height: auto;
-    aspect-ratio: 30 / 11;
+    aspect-ratio: 30 / 10;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     background: linear-gradient(90deg, #fdf100, #000);
 }
+
+
 
 .carousel-image {
     position: absolute;
@@ -361,6 +363,23 @@ function getProgressStyle(index: number) {
     transition: stroke-dashoffset 0.1s linear;
 }
 
+@media (max-width: 1060px) and (min-width: 769px) {
+
+    .indicators {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        padding: 2.5px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+    }
+
+    .carousel {
+
+        max-width: 95%;
+    }
+}
+
 @media (max-width: 768px) {
     .arrow.left {
         display: none;
@@ -369,27 +388,21 @@ function getProgressStyle(index: number) {
     .arrow.right {
         display: none;
     }
-    .carousel-container {
-        margin: 0;
-        padding: 20px 0 15px;
-    }
-}
 
-@media (max-width: 1060px) {
+    .carousel-container {
+        margin: 0 0 10px;
+        padding: 0;
+    }
 
     .carousel {
-
-        max-width: 95%;
+        width: 100%;
+        border-radius: 0;
+        aspect-ratio: 30 / 10.5;
     }
 
-    /* Indicadores */
-    .indicators {
-        display: flex;
-        gap: 6px;
-        align-items: center;
-        padding: 2.5px;
-        background: rgba(0, 0, 0, 0.5);
-        border-radius: 8px;
+    .carousel-image {
+
+        border-radius: 0;
     }
 
 }

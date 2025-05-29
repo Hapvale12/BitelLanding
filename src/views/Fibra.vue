@@ -2,8 +2,8 @@
     <div class="fibra-container">
         <BannerCarousel />
         <PlansFibraCarousel />
+        <FooterFibra />
     </div>
-    <FooterFibra />
 </template>
 
 <script setup lang="ts">
@@ -15,6 +15,10 @@ import FooterFibra from '../components/FooterFibra.vue';
 </script>
 
 <style>
+.footer {
+    width: 100%;
+}
+
 .fibra-container {
     display: flex;
     flex-direction: column;

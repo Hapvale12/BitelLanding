@@ -10,7 +10,7 @@
                     </svg>
                 </button>
 
-                <h2 class="title">Formulario Fibra - Plan: {{ plan?.name || 'Ninguno' }}</h2>
+                <h2 class="title">Plan Fibra </h2>
                 <div class="form-container">
                     <h1>¡Cámbiate a Bitel!</h1>
                     <p class="caption">Descubre la velocidad imparable de nuestra fibra óptica de última generación.</p>
@@ -38,7 +38,7 @@
                                     :maxlength="getMaxLength('telefono')" :class="{ invalid: errors.telefono }"
                                     required />
                                 <small v-if="errors.telefono" class="error-msg">{{ getErrorMessage('telefono')
-                                }}</small>
+                                    }}</small>
                             </div>
 
                             <div class="form-group">
@@ -53,7 +53,7 @@
                                 <input type="text" id="apellido" v-model="formStep1.apellido"
                                     :class="{ invalid: errors.apellido }" required />
                                 <small v-if="errors.apellido" class="error-msg">{{ getErrorMessage('apellido')
-                                }}</small>
+                                    }}</small>
                             </div>
 
                             <div class="form-group">
@@ -82,7 +82,6 @@
                                 <input type="text" id="distrito" v-model="formStep2.distrito" required />
                             </div>
                         </div>
-
 
                         <div class="checkbox-group">
                             <input type="checkbox" id="autorizo" v-model="formStep1.autorizo" />
@@ -232,7 +231,6 @@ function continuar() {
             referencia: '',
             distrito: '',
         }
-
         close()
     }
 }
@@ -329,7 +327,7 @@ h1 {
 
 .form-group input {
     width: 100%;
-    padding: 4px;
+    padding: 6px;
     border: 1px solid #bbb;
     border-radius: 5px;
     font-size: 1rem;
@@ -360,31 +358,6 @@ h1 {
     background-color: #008f45;
 }
 
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-}
-
-.invalid {
-    border-color: red;
-}
-
-.error-msg {
-    color: red;
-    font-size: 0.75rem;
-    margin-top: 2px;
-}
-
-
-
 
 
 
@@ -401,6 +374,20 @@ h1 {
     z-index: 9999;
     overflow-y: scroll;
 }
+
+.invalid {
+    border-color: red;
+}
+
+.error-msg {
+    color: red;
+    font-size: 0.75rem;
+    margin-top: 2px;
+}
+
+
+
+
 
 .modal-content {
     border: 2px solid #057689;
@@ -423,6 +410,11 @@ h1 {
     cursor: pointer;
 }
 
+.caption {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
 /* Animación simple */
 .modal-fade-enter-active,
 .modal-fade-leave-active {
@@ -437,7 +429,7 @@ h1 {
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 3px 15px;
 }
 
 /* Que los elementos ocupen una sola columna si es necesario */
@@ -459,21 +451,26 @@ h1 {
     }
 
     .form-container {
-        padding: 10px 15px;
+        padding: 0px 25px 10px 25px;
+        /* max-height: 600px; */
+        overflow-y: auto;
     }
 
     h1 {
-        font-size: 28px;
+        font-size: 30px;
     }
 
     .title {
         font-size: 18px;
         padding: 10px;
+
     }
 
     .title-data {
         font-size: 18px;
+        margin-bottom: 4px;
     }
+
 
     .form-group input {
         font-size: 0.95rem;
