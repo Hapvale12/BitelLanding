@@ -26,7 +26,7 @@
         <SwiperSlide v-for="(plan, index) in plans" :key="index">
             <div class="plan-container">
                 <header class="header-select-plan">
-                    {{ plan.plan_nombre }} {{ plan.gb_alta_velocidad }}
+                    {{ plan.plan_nombre }}
                 </header>
 
                 <div class="gb-data-container">
@@ -88,7 +88,7 @@ const selectedPlan = ref(null);
 
 const plans = [
     {
-        plan_nombre: 'Bitel Fibra',
+        plan_nombre: 'Bitel Fibra 200',
         precio: 55,
         gb_alta_velocidad: 200,
         descripcion: 'Internet de fibra óptica con alta velocidad y estabilidad.',
@@ -98,7 +98,7 @@ const plans = [
         url_solicitud: '',
     },
     {
-        plan_nombre: 'Bitel Fibra',
+        plan_nombre: 'Bitel Fibra 400',
         precio: 109,
         gb_alta_velocidad: 400,
         descripcion: 'Internet de fibra óptica con alta velocidad y estabilidad.',
@@ -108,7 +108,7 @@ const plans = [
         url_solicitud: '',
     },
     {
-        plan_nombre: 'Bitel Fibra',
+        plan_nombre: 'Bitel Fibra 1000',
         precio: 139,
         gb_alta_velocidad: 1000,
         descripcion: 'Internet de fibra óptica con alta velocidad y estabilidad.',

@@ -9,7 +9,6 @@
     "preview": "vite preview",
     "lint": "vue-tsc --noEmit && vite lint",
     "format": "prettier --write .",
-    "upload": "npm run build && git add . && git commit -m 'update dist' && git push",
     "git": "git add . && git commit -m 'update' && git push"
   },
   "dependencies": {
