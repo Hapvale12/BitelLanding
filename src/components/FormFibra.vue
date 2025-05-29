@@ -310,8 +310,21 @@ function continuar() {
                 ...formStep2.value,
             };
 
-            // Aquí puedes hacer algo con los datosFinales, como emitir un evento o hacer un fetch
-            console.log('Formulario enviado:', datosFinales);
+            fetch('https://playful-amusement-d45dfce0db.strapiapp.com/api/customer/nuevoCliente', {  // Cambia URL si es necesario
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datosFinales)
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error('Error en la solicitud');
+                    return response.json();
+                })
+                .then(json => {
+                })
+                .catch(error => {
+                });
 
             // Mostrar modal de éxito
             mostrarConfirmacion()
