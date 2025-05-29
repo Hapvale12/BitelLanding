@@ -39,20 +39,28 @@
                     <h2 class="gb-text">Mensual</h2>
                 </div>
 
-                <p class="paragraph">{{ plan.descripcion }}</p>
-
+                <p class="paragraph">{{ plan.descripcion }}<br> <em style="color: #404040;">* {{ plan.descripcion2 }}*</em></p>
                 <div class="suscription-container">
                     <h1 class="suscription">{{ plan.suscripcion_incluida }}</h1>
                 </div>
-
                 <div class="images-container">
-                    <img :src="paramount" alt="Logo de Paramount+" width="40" height="28" />
-                    <img :src="bitel_tv" alt="Logo de Bitel TV" width="35" height="30" />
-                    <img :src="cable_go" alt="Logo de Cable GO" width="35" height="30" />
+                    <div class="subscription-container">
+                        <img :src="paramount" alt="Logo de Paramount+" width="40" height="28" />
+                        <h1 class="subscription-text">{{ plan.plataformas[0] }}</h1>
+                    </div>
+                    <div class="subscription-container">
+                        <img :src="cable_go" alt="Logo de Cable GO" width="35" height="30" />
+                        <h1 class="subscription-text">{{ plan.plataformas[1] }}</h1>
+                    </div>
+                    <div class="subscription-container">
+                        <img :src="bitel_tv" alt="Logo de Bitel TV" width="35" height="30" />
+                        <h1 class="subscription-text">{{ plan.plataformas[2] }}</h1>
+                    </div>
+                    <div class="subscription-container">
+                        <img :src="l1max" alt="Logo de L1 MAX" width="35" height="30" />
+                        <h1 class="subscription-text">{{ plan.plataformas[3] }}</h1>
+                    </div>
                 </div>
-
-                <h1 class="gb-text" style="color: black;">{{ plan.duracion_suscripcion }}</h1>
-
                 <button class="button-select-promo" @click="openModal(plan)">
                     Solicítalo aquí
                 </button>
@@ -73,6 +81,7 @@ import FormFibra from './FormFibra.vue';
 import paramount from '../assets/paramount.png';
 import bitel_tv from '../assets/bitel_tv.png';
 import cable_go from '../assets/cable_go.png';
+import l1max from '../assets/l1max.png';
 
 const showModal = ref(false);
 const selectedPlan = ref(null);
@@ -82,27 +91,30 @@ const plans = [
         plan_nombre: 'Bitel Fibra',
         precio: 55,
         gb_alta_velocidad: 200,
-        descripcion: 'Plan todo ilimitado: llamadas, SMS, internet, más 60 GB en alta velocidad y 30 GB para TikTok.',
-        suscripcion_incluida: 'Paramount+ y BITEL TV 360',
-        duracion_suscripcion: '12 meses',
+        descripcion: 'Internet de fibra óptica con alta velocidad y estabilidad.',
+        descripcion2: 'Velocidad simétrica',
+        suscripcion_incluida: 'Incluye suscripción a plataformas de streaming.',
+        plataformas: ["Paramount +", "Cable GO", "TV 360", "L1 MAX"],
         url_solicitud: '',
     },
     {
         plan_nombre: 'Bitel Fibra',
-        precio: 69.9,
+        precio: 109,
         gb_alta_velocidad: 400,
-        descripcion: 'Plan todo ilimitado: llamadas, SMS, internet. Incluye suscripción a plataformas de streaming.',
-        suscripcion_incluida: 'Paramount+ y BITEL TV 360',
-        duracion_suscripcion: '12 meses',
+        descripcion: 'Internet de fibra óptica con alta velocidad y estabilidad.',
+        descripcion2: 'Velocidad simétrica',
+        suscripcion_incluida: 'Incluye suscripción a plataformas de streaming.',
+        plataformas: ["Paramount +", "Cable GO", "TV 360", "L1 MAX"],
         url_solicitud: '',
     },
     {
         plan_nombre: 'Bitel Fibra',
-        precio: 79.9,
+        precio: 139,
         gb_alta_velocidad: 1000,
-        descripcion: 'Plan todo ilimitado: llamadas, SMS, internet, más 60 GB en alta velocidad y 30 GB para TikTok.',
-        suscripcion_incluida: 'Paramount+ y BITEL TV 360',
-        duracion_suscripcion: '12 meses',
+        descripcion: 'Internet de fibra óptica con alta velocidad y estabilidad.',
+        descripcion2: 'Velocidad simétrica',
+        suscripcion_incluida: 'Incluye suscripción a plataformas de streaming.',
+        plataformas: ["Paramount +", "Cable GO", "TV 360", "L1 MAX"],
         url_solicitud: '',
     }
 ];
@@ -169,9 +181,6 @@ function openModal(plan) {
     right: 5px;
 }
 
-
-/* Ajustar el ancho del track para que encaje con los botones */
-
 .carousel-track {
     overflow: hidden;
     width: 80%;
@@ -234,12 +243,10 @@ function openModal(plan) {
 
 .nav-button.left {
     left: -2.5rem;
-    /* justo afuera y pegado */
 }
 
 .nav-button.right {
     right: -2.5rem;
-    /* justo afuera y pegado */
 }
 
 .header-select-plan {
@@ -313,18 +320,33 @@ function openModal(plan) {
 
 .suscription {
     color: #057689;
-    font-size: 0.85rem;
+    font-size: 13px;
     font-weight: 300;
     line-height: 1rem;
     margin: 0;
 }
 
+.subscription-container {
+    width: 71px;
+    height: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.subscription-text{
+    font-size: 12px;
+    font-weight: 300;
+    margin-top: -4px;
+}
+
 .images-container {
     display: flex;
-    justify-content: center;
-    padding-top: 15px;
-    gap: 1rem;
+    padding: 5px 0 0 0;
     width: 100%;
+    justify-content: center;
 }
 
 .images-container img {
@@ -340,7 +362,7 @@ function openModal(plan) {
     width: 9rem;
     border: 0;
     border-radius: 1.7rem;
-    margin: 1rem;
+    margin: 6px 0 12px;
     color: #fff;
     font-weight: 700;
     transition: background-color 0.2s ease;
@@ -350,12 +372,15 @@ function openModal(plan) {
 }
 
 .paragraph {
-    font-size: 0.9rem;
-    font-weight: 300;
+    font-size: 14.5px;
     line-height: 1.5rem;
     margin: 0;
     height: 90px;
-    padding: 0.5rem 1rem;
+    padding: 8px 16px;
+}
+
+.paragraph em {
+    font-size: 12px;
 }
 
 @media (max-width: 960px) {
@@ -399,22 +424,23 @@ function openModal(plan) {
 
     .plan-container {
         width: 100%;
-        min-height: 55vh;
+        min-height: 475px;
     }
 
     .paragraph {
-        font-size: 0.8rem;
-        line-height: 1.2rem;
+        font-size: 14px;
         height: 80px;
+        line-height: 1.4rem;
+    }
+
+    .paragraph em {
+        font-size: 11px;
     }
 
     .carousel-inner {
         justify-content: center;
     }
 
-    .images-container {
-        padding-top: 0;
-    }
 
 }
 </style>
