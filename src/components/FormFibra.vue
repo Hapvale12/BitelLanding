@@ -30,7 +30,7 @@
                                     :maxlength="getMaxLength('telefono')" :class="{ invalid: errors.telefono }"
                                     required />
                                 <small v-if="errors.telefono" class="error-msg">{{ getErrorMessage('telefono')
-                                }}</small>
+                                    }}</small>
                             </div>
                             <div class="form-group">
                                 <label for="dni">{{ getLabel('dni') }}</label>
@@ -49,7 +49,7 @@
                                 <input type="text" id="apellido" v-model="formStep1.apellido"
                                     :class="{ invalid: errors.apellido }" required />
                                 <small v-if="errors.apellido" class="error-msg">{{ getErrorMessage('apellido')
-                                }}</small>
+                                    }}</small>
                             </div>
                             <div class="form-group">
                                 <label for="correo">{{ getLabel('correo') }}</label>
@@ -71,7 +71,7 @@
                                     </option>
                                 </select>
                                 <small v-if="errors.departamento" class="error-msg">{{ getErrorMessage('departamento')
-                                }}</small>
+                                    }}</small>
                             </div>
 
                             <div class="form-group">
@@ -84,7 +84,7 @@
                                     </option>
                                 </select>
                                 <small v-if="errors.provincia" class="error-msg">{{ getErrorMessage('provincia')
-                                }}</small>
+                                    }}</small>
                             </div>
 
                             <div class="form-group">
@@ -97,7 +97,7 @@
                                     </option>
                                 </select>
                                 <small v-if="errors.distrito" class="error-msg">{{ getErrorMessage('distrito')
-                                }}</small>
+                                    }}</small>
                             </div>
                         </div>
 
@@ -122,20 +122,22 @@
     </transition>
 
     <transition name="fade-zoom">
-    <div v-if="showSuccessModal" class="modal-overlay success">
-        <div class="modal-box">
-            <div class="modal-icon">
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" fill="#4CAF50" />
-                    <path d="M16 8l-6.5 7L8 12.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
+        <div v-if="showSuccessModal" class="modal-overlay success">
+            <div class="modal-box">
+                <div class="modal-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" fill="#4CAF50" />
+                        <path d="M16 8l-6.5 7L8 12.5" stroke="#fff" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <h2 class="modal-title">¡Enviado con éxito!</h2>
+                <p class="modal-text">Tus datos han sido registrados correctamente. Muy pronto nos comunicaremos
+                    contigo.</p>
+                <button @click="closeSuccessModal" class="modal-button">Cerrar</button>
             </div>
-            <h2 class="modal-title">¡Enviado con éxito!</h2>
-            <p class="modal-text">Tus datos han sido registrados correctamente. Muy pronto nos comunicaremos contigo.</p>
-            <button @click="closeSuccessModal" class="modal-button">Cerrar</button>
         </div>
-    </div>
-</transition>
+    </transition>
 </template>
 
 <script setup>
@@ -157,7 +159,7 @@ const emit = defineEmits(['update:modelValue'])
 
 function close() {
     emit('update:modelValue', false)
-
+    step.value = 1
 
     formStep1.value = {
         dni: '',
@@ -311,18 +313,12 @@ function continuar() {
             // Aquí puedes hacer algo con los datosFinales, como emitir un evento o hacer un fetch
             console.log('Formulario enviado:', datosFinales);
 
-            // También podrías cerrar el modal
-            step.value = 1
-            close();
-
             // Mostrar modal de éxito
             mostrarConfirmacion()
 
             // Cerrar modal principal después de un tiempo
             setTimeout(() => {
-                // showSuccessModal.value = false
                 close()
-                step.value = 1
             }, 3000)
         }
     }
@@ -649,6 +645,18 @@ small.error-msg {
     animation: bounce 0.6s ease;
 }
 
+.close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    transition: transform 0.2s;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
+}
+
 .modal-title {
     font-size: 1.6rem;
     font-weight: 700;
@@ -683,6 +691,7 @@ small.error-msg {
         opacity: 0;
         transform: scale(0.8);
     }
+
     100% {
         opacity: 1;
         transform: scale(1);
@@ -693,20 +702,25 @@ small.error-msg {
     0% {
         transform: scale(0.8);
     }
+
     60% {
         transform: scale(1.1);
     }
+
     100% {
         transform: scale(1);
     }
 }
 
-.fade-zoom-enter-active, .fade-zoom-leave-active {
+.fade-zoom-enter-active,
+.fade-zoom-leave-active {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.fade-zoom-enter-from, .fade-zoom-leave-to {
+
+.fade-zoom-enter-from,
+.fade-zoom-leave-to {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(1.1);
 }
 
 
