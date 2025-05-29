@@ -162,6 +162,7 @@ function close() {
     step.value = 1
 
     formStep1.value = {
+        plan: props.plan.name,
         dni: '',
         telefono: '',
         nombre: '',
@@ -209,6 +210,7 @@ function closeSuccessModal() {
 // Datos del formulario
 
 const formStep1 = ref({
+    plan: props.plan.name,
     dni: '',
     telefono: '',
     nombre: '',
@@ -307,7 +309,7 @@ function continuar() {
 
             const datosFinales = {
                 ...formStep1.value,
-                ...formStep2.value,
+                ...formStep2.value
             };
 
             fetch('https://playful-amusement-d45dfce0db.strapiapp.com/api/customer/nuevoCliente', {  // Cambia URL si es necesario
