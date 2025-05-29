@@ -21,7 +21,7 @@
                         </div>
                     </div>
 
-                    <h2 class="title-data">Ingresa tus Datos</h2>
+                    <h2 class="title-data">{{ step == 1 ? 'Ingresa tus Datos' : 'Ubicación para instalación' }}</h2>
                     <form @submit.prevent="continuar()" novalidate>
                         <div v-if="step === 1" class="form-grid">
                             <div class="form-group">
@@ -59,18 +59,45 @@
                             </div>
                         </div>
 
+
                         <div v-else class="form-grid">
                             <div class="form-group">
                                 <label for="departamento">{{ getLabel('departamento') }}</label>
-                                <input type="text" id="departamento" v-model="formStep2.departamento" required />
+                                <select id="departamento" v-model="formStep2.departamento"
+                                    @change="onDepartamentoChange" class="nice-select" required>
+                                    <option disabled value="">Seleccione un departamento</option>
+                                    <option v-for="dep in ubigeo.departamentos" :key="dep.id_ubigeo" :value="dep">
+                                        {{ dep.nombre_ubigeo }}
+                                    </option>
+                                </select>
+                                <small v-if="errors.departamento" class="error-msg">{{ getErrorMessage('departamento')
+                                }}</small>
                             </div>
+
                             <div class="form-group">
                                 <label for="provincia">{{ getLabel('provincia') }}</label>
-                                <input type="text" id="provincia" v-model="formStep2.provincia" required />
+                                <select id="provincia" v-model="formStep2.provincia" @change="onProvinciaChange"
+                                    class="nice-select" required>
+                                    <option disabled value="">Seleccione una provincia</option>
+                                    <option v-for="prov in provinciasFiltradas" :key="prov.id_ubigeo" :value="prov">
+                                        {{ prov.nombre_ubigeo }}
+                                    </option>
+                                </select>
+                                <small v-if="errors.provincia" class="error-msg">{{ getErrorMessage('provincia')
+                                }}</small>
                             </div>
+
                             <div class="form-group">
                                 <label for="distrito">{{ getLabel('distrito') }}</label>
-                                <input type="text" id="distrito" v-model="formStep2.distrito" required />
+                                <select id="distrito" v-model="formStep2.distrito" @change="onDistritoChange"
+                                    class="nice-select" required>
+                                    <option disabled value="">Seleccione un distrito</option>
+                                    <option v-for="distr in distritosFiltrados" :key="distr.id_ubigeo" :value="distr">
+                                        {{ distr.nombre_ubigeo }}
+                                    </option>
+                                </select>
+                                <small v-if="errors.distrito" class="error-msg">{{ getErrorMessage('distrito')
+                                }}</small>
                             </div>
                         </div>
 
@@ -80,7 +107,7 @@
                             <div class="checkbox-label">
                                 <label for="autorizo">Autorizo el uso de mis datos personales.</label>
                                 <small v-if="errors.autorizo && !formStep1.autorizo" class="error-msg"> {{
-                                    getErrorMessage('autorizo')}}</small>
+                                    getErrorMessage('autorizo') }}</small>
                             </div>
                         </div>
 
@@ -93,10 +120,26 @@
             </div>
         </div>
     </transition>
+
+    <transition name="fade-zoom">
+    <div v-if="showSuccessModal" class="modal-overlay success">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" fill="#4CAF50" />
+                    <path d="M16 8l-6.5 7L8 12.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <h2 class="modal-title">¡Enviado con éxito!</h2>
+            <p class="modal-text">Tus datos han sido registrados correctamente. Muy pronto nos comunicaremos contigo.</p>
+            <button @click="closeSuccessModal" class="modal-button">Cerrar</button>
+        </div>
+    </div>
+</transition>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import ubigeo from '../assets/ubigeo.js';
 import { watch } from 'vue';
 
@@ -113,23 +156,22 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 function close() {
-    console.log(props.plan);
     emit('update:modelValue', false)
-    emit('update:plan', null);
 
-    // formStep1.value = {
-    //     dni: '',
-    //     telefono: '',
-    //     nombre: '',
-    //     apellido: '',
-    //     correo: '',
-    //     autorizo: false,
-    // }
-    // formStep2.value = {
-    //     departamento: '',
-    //     provincia: '',
-    //     distrito: '',
-    // }
+
+    formStep1.value = {
+        dni: '',
+        telefono: '',
+        nombre: '',
+        apellido: '',
+        correo: '',
+        autorizo: false,
+    }
+    formStep2.value = {
+        departamento: '',
+        provincia: '',
+        distrito: '',
+    }
 
     // Resetear errores
     errors.value = {
@@ -147,9 +189,21 @@ function close() {
     }
 }
 
-const plan = ref({ name: 'Plan Básico' })
 const step = ref(1)
-const ubigeoData = ref(ubigeo);
+const showSuccessModal = ref(false)
+
+function mostrarConfirmacion() {
+    showSuccessModal.value = true
+    setTimeout(() => {
+        showSuccessModal.value = false
+        close() // También cierra el modal principal
+    }, 3000)
+}
+
+function closeSuccessModal() {
+    showSuccessModal.value = false
+    close()
+}
 // Datos del formulario
 
 const formStep1 = ref({
@@ -164,7 +218,7 @@ const formStep1 = ref({
 const formStep2 = ref({
     distrito: '',
     provincia: '',
-    ciudad: ''
+    departamento: ''
 })
 
 const errors = ref({
@@ -179,15 +233,6 @@ const errors = ref({
     distrito: false,
     provincia: false,
     departamento: false
-})
-
-// funcion hotkey para ejecutar funcion console.log('Hotkey pressed!')
-document.addEventListener('keydown', (event) => {
-    if (event.ctrlKey) {
-        console.log(ubigeoData.value);
-        console.log('Hotkey pressed!');
-
-    }
 })
 
 function getLabel(key) {
@@ -214,12 +259,15 @@ function getMaxLength(key) {
 
 function getErrorMessage(key) {
     const msgs = {
-        dni: 'DNI inválido.',
-        telefono: 'Teléfono inválido.',
-        nombre: 'Nombre inválido.',
-        apellido: 'Apellido inválido.',
-        correo: 'Correo electrónico inválido.',
-        autorizo: 'Debes autorizar el uso de tus datos.',
+        dni: 'DNI inválido*',
+        telefono: 'Teléfono inválido*',
+        nombre: 'Nombre inválido*',
+        apellido: 'Apellido inválido*',
+        correo: 'Correo electrónico inválido*',
+        autorizo: 'Debes autorizar el uso de tus datos*',
+        distrito: 'Debes seleccionar un distrito*',
+        provincia: 'Debes seleccionar una provincia*',
+        departamento: 'Debes seleccionar un departamento*',
     }
     return msgs[key]
 }
@@ -235,23 +283,48 @@ function validarFormularioPaso1() {
     return !Object.values(errors.value).some(Boolean)
 }
 
+function validarFormularioPaso2() {
+    errors.value.departamento = !formStep2.value.departamento;
+    errors.value.provincia = !formStep2.value.provincia;
+    errors.value.distrito = !formStep2.value.distrito;
 
+    return !Object.values(errors.value).some(Boolean);
+}
 
 function continuar() {
     // Validar el paso 1 antes de continuar al paso 2
     if (step.value === 1) {
-        step.value = 2
-        if (validarFormularioPaso1()) {
+        if (!validarFormularioPaso1()) {
+            step.value = 2
         }
     } else {
-        const datosFinales = {
-            ...formStep1.value,
-            ...formStep2.value,
-            plan: plan.value?.name || null,
-        }
+        if (!validarFormularioPaso2()) {
+            formStep2.value.departamento = formStep2.value.departamento.nombre_ubigeo || '';
+            formStep2.value.provincia = formStep2.value.provincia.nombre_ubigeo || '';
+            formStep2.value.distrito = formStep2.value.distrito.nombre_ubigeo || '';
 
-        step.value = 1
-        close()
+            const datosFinales = {
+                ...formStep1.value,
+                ...formStep2.value,
+            };
+
+            // Aquí puedes hacer algo con los datosFinales, como emitir un evento o hacer un fetch
+            console.log('Formulario enviado:', datosFinales);
+
+            // También podrías cerrar el modal
+            step.value = 1
+            close();
+
+            // Mostrar modal de éxito
+            mostrarConfirmacion()
+            
+            // Cerrar modal principal después de un tiempo
+            setTimeout(() => {
+                // showSuccessModal.value = false
+                close()
+                step.value = 1
+            }, 3000)
+        }
     }
 }
 
@@ -280,36 +353,38 @@ watch(() => formStep1.value.autorizo, (newVal) => {
     errors.value.autorizo = !newVal;
 });
 
-//STEP => 2
-watch(() => formStep2.value.distrito, (val) => {
-    errors.value.distrito = val.trim() === ''
-})
 
-watch(() => formStep2.value.provincia, (val) => {
-    errors.value.provincia = val.trim() === ''
-})
+//Step 2: Cambiar provincia al seleccionar departamento
+function onDepartamentoChange() {
+    formStep2.value.departamento = formStep2.value.departamento;
+    formStep2.value.provincia = '';
+    formStep2.value.distrito = '';
+}
 
-watch(() => formStep2.value.departamento, (val) => {
-    errors.value.departamento = val.trim() === ''
-})
-watch(() => formStep2.value.departamento, (val) => {
-    if (val.trim() !== '') {
-        const departamento = ubigeoData.value.find(d => d.departamento.toLowerCase() === val.toLowerCase());
-        if (departamento) {
-            formStep2.value.provincia = departamento.provincias[0].nombre;
-            formStep2.value.distrito = departamento.provincias[0].distritos[0].nombre;
-        } else {
-            formStep2.value.provincia = '';
-            formStep2.value.distrito = '';
-        }
-    } else {
-        formStep2.value.provincia = '';
-        formStep2.value.distrito = '';
-    }
+function onProvinciaChange() {
+    formStep2.value.provincia = formStep2.value.provincia;
+    formStep2.value.distrito = '';
+}
+
+function onDistritoChange() {
+    formStep2.value.distrito = formStep2.value.distrito;
+}
+
+const provinciasFiltradas = computed(() => {
+    // Filtrar provincias según el departamento seleccionado
+    const provincias = ref([]);
+    provincias.value = ubigeo.provincias[formStep2.value.departamento.id_ubigeo] || [];
+    return provincias.value;
+});
+
+const distritosFiltrados = computed(() => {
+    // Filtrar distritos según la provincia seleccionada
+    const distritos = ref([]);
+    distritos.value = ubigeo.distritos[formStep2.value.provincia.id_ubigeo] || [];
+    return distritos.value;
 });
 
 </script>
-
 
 <style scoped>
 @font-face {
@@ -525,6 +600,115 @@ small.error-msg {
     flex-direction: column;
     align-items: flex-start;
 }
+
+.nice-select {
+    width: 100%;
+    padding: 0.6em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 1em;
+    color: #333;
+    cursor: pointer;
+}
+
+.nice-select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Modal Success */
+
+.modal-overlay.success {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: popIn 0.35s ease-out;
+}
+
+.modal-icon {
+    margin-bottom: 1rem;
+    animation: bounce 0.6s ease;
+}
+
+.modal-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.modal-text {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.modal-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.modal-button:hover {
+    background-color: #43a047;
+}
+
+/* Animaciones */
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: scale(0.8);
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.fade-zoom-enter-active, .fade-zoom-leave-active {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.fade-zoom-enter-from, .fade-zoom-leave-to {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
 
 @media (max-width: 800px) {
     .modal-content {

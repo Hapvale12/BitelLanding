@@ -49,7 +49,17 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 import banner1 from '../assets/banner_1.png';
 import banner2 from '../assets/banner_2.png';
 
-const images = [banner1, banner2];
+//Guardar las imágenes importadas en localStorage para menor consumo de datos 
+// y mejor rendimiento
+if (!localStorage.getItem('banner1')) {
+    localStorage.setItem('banner1', banner1);
+}
+if (!localStorage.getItem('banner2')) {
+    localStorage.setItem('banner2', banner2);
+}
+
+const images = [localStorage.getItem('banner1'), localStorage.getItem('banner2')].filter(Boolean) as string[];
+// Asegurarse de que siempre haya al menos una imagen
 
 const currentIndex = ref(0);
 const previousIndex = ref(0);
