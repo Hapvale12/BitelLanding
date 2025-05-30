@@ -110,7 +110,7 @@
                                     getErrorMessage('autorizo') }}</small>
                             </div>
                         </div>
-                        
+
                         <br v-if="step === 2">
                         <!-- Solo reCAPTCHA v2 -->
                         <div class="form-group" v-if="step === 2">
@@ -307,7 +307,7 @@ async function continuar() {
 
     if (step.value === 1) {
         formStep1.value.plan = props.plan.plan_nombre;
-        if (!validarFormularioPaso1()) {
+        if (validarFormularioPaso1()) {
             step.value = 2
         }
     } else {
