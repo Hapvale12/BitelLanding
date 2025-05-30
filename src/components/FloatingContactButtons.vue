@@ -16,7 +16,7 @@
       </a>
   
       <a
-        :href="`tel:+${phone}`"
+        :href="`tel:+npm ${phone}`"
         class="button phone"
         title="Llamar por teléfono"
       >
