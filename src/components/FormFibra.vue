@@ -10,7 +10,7 @@
                     </svg>
                 </button>
 
-                <h2 class="title">Plan Fibra {{ props.plan.gb_alta_velocidad }} </h2>
+                <h2 class="title">Plan Fibra {{ props.plan?.gb_alta_velocidad || 'No especificado' }} </h2>
                 <div class="form-container">
                     <h1>¡Cámbiate a Bitel!</h1>
                     <p class="caption">Descubre la velocidad imparable de nuestra fibra óptica de última generación.</p>
@@ -99,6 +99,14 @@
                                 <small v-if="errors.distrito" class="error-msg">{{ getErrorMessage('distrito')
                                     }}</small>
                             </div>
+
+
+                            <!-- Solo reCAPTCHA v2 -->
+                            <div class="form-group" v-if="step === 2">
+                                <div class="g-recaptcha" data-sitekey="6LdFs08rAAAAAKuYgSm5bIuhpCkvarQkTa8zLxR4"></div>
+                                <small v-if="errors.recaptcha" class="error-msg">Por favor completa el
+                                    reCAPTCHA*</small>
+                            </div>
                         </div>
 
                         <div class="checkbox-group" v-if="step === 1">
@@ -141,9 +149,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, nextTick, watch } from 'vue';
 import ubigeo from '../assets/ubigeo.js';
-import { watch } from 'vue';
 
 // Componente para el formulario de Fibra
 
@@ -186,6 +193,7 @@ function close() {
         autorizo: false,
 
         // Paso 2
+        recaptcha: false,
         distrito: false,
         provincia: false,
         departamento: false
@@ -234,6 +242,7 @@ const errors = ref({
     autorizo: false,
 
     // Paso 2
+    recaptcha: false,
     distrito: false,
     provincia: false,
     departamento: false
@@ -295,20 +304,25 @@ function validarFormularioPaso2() {
     return !Object.values(errors.value).some(Boolean);
 }
 
-function continuar() {
-    
+async function continuar() {
+
     if (step.value === 1) {
-        formStep1.value.plan = props.plan.plan_nombre; 
-        if (validarFormularioPaso1()) {
+        formStep1.value.plan = props.plan.plan_nombre;
+        if (!validarFormularioPaso1()) {
             step.value = 2
         }
     } else {
         if (validarFormularioPaso2()) {
-            
+
+
+            const recaptchaResponse = grecaptcha.getResponse();
+            errors.value.recaptcha = recaptchaResponse === '';
+            if (errors.value.recaptcha) return;
+
             formStep2.value.departamento = formStep2.value.departamento.nombre_ubigeo || '';
             formStep2.value.provincia = formStep2.value.provincia.nombre_ubigeo || '';
             formStep2.value.distrito = formStep2.value.distrito.nombre_ubigeo || '';
-            
+
             const datosFinales = {
                 ...formStep1.value,
                 ...formStep2.value
@@ -366,6 +380,20 @@ watch(() => formStep1.value.autorizo, (newVal) => {
     errors.value.autorizo = !newVal;
 });
 
+watch(() => step.value, async (newStep) => {
+    if (newStep === 2) {
+        await nextTick()
+        if (window.grecaptcha && window.grecaptcha.render) {
+            const recaptchaElement = document.querySelector('.g-recaptcha')
+            if (recaptchaElement && !recaptchaElement.hasChildNodes()) {
+                window.grecaptcha.render(recaptchaElement, {
+                    sitekey: '6LdFs08rAAAAAKuYgSm5bIuhpCkvarQkTa8zLxR4',
+                })
+            }
+        }
+    }
+})
+
 
 //Step 2: Cambiar provincia al seleccionar departamento
 function onDepartamentoChange() {
@@ -410,6 +438,13 @@ const distritosFiltrados = computed(() => {
     font-family: BreeCFApp;
     src: url(../assets/BreeCFApp-Regular-87a9cb2f.otf) format("truetype");
     font-weight: 400;
+}
+
+.g-recaptcha {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 * {
