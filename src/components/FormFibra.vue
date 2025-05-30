@@ -30,7 +30,7 @@
                                     :maxlength="getMaxLength('telefono')" :class="{ invalid: errors.telefono }"
                                     required />
                                 <small v-if="errors.telefono" class="error-msg">{{ getErrorMessage('telefono')
-                                    }}</small>
+                                }}</small>
                             </div>
                             <div class="form-group">
                                 <label for="dni">{{ getLabel('dni') }}</label>
@@ -49,7 +49,7 @@
                                 <input type="text" id="apellido" v-model="formStep1.apellido"
                                     :class="{ invalid: errors.apellido }" required />
                                 <small v-if="errors.apellido" class="error-msg">{{ getErrorMessage('apellido')
-                                    }}</small>
+                                }}</small>
                             </div>
                             <div class="form-group">
                                 <label for="correo">{{ getLabel('correo') }}</label>
@@ -71,7 +71,7 @@
                                     </option>
                                 </select>
                                 <small v-if="errors.departamento" class="error-msg">{{ getErrorMessage('departamento')
-                                    }}</small>
+                                }}</small>
                             </div>
 
                             <div class="form-group">
@@ -84,7 +84,7 @@
                                     </option>
                                 </select>
                                 <small v-if="errors.provincia" class="error-msg">{{ getErrorMessage('provincia')
-                                    }}</small>
+                                }}</small>
                             </div>
 
                             <div class="form-group">
@@ -97,15 +97,7 @@
                                     </option>
                                 </select>
                                 <small v-if="errors.distrito" class="error-msg">{{ getErrorMessage('distrito')
-                                    }}</small>
-                            </div>
-
-
-                            <!-- Solo reCAPTCHA v2 -->
-                            <div class="form-group" v-if="step === 2">
-                                <div class="g-recaptcha" data-sitekey="6LdFs08rAAAAAKuYgSm5bIuhpCkvarQkTa8zLxR4"></div>
-                                <small v-if="errors.recaptcha" class="error-msg">Por favor completa el
-                                    reCAPTCHA*</small>
+                                }}</small>
                             </div>
                         </div>
 
@@ -118,8 +110,15 @@
                                     getErrorMessage('autorizo') }}</small>
                             </div>
                         </div>
-
+                        
                         <br v-if="step === 2">
+                        <!-- Solo reCAPTCHA v2 -->
+                        <div class="form-group" v-if="step === 2">
+                            <div class="g-recaptcha" data-sitekey="6LdFs08rAAAAAKuYgSm5bIuhpCkvarQkTa8zLxR4"></div>
+                            <small v-if="errors.recaptcha" class="error-msg">Por favor completa el
+                                reCAPTCHA*</small>
+                        </div>
+
                         <div class="button-container">
                             <button type="submit">{{ step === 1 ? 'Siguiente' : 'Enviar' }}</button>
                         </div>
@@ -308,7 +307,7 @@ async function continuar() {
 
     if (step.value === 1) {
         formStep1.value.plan = props.plan.plan_nombre;
-        if (validarFormularioPaso1()) {
+        if (!validarFormularioPaso1()) {
             step.value = 2
         }
     } else {
