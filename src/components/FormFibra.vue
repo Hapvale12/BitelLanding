@@ -308,12 +308,11 @@ async function continuar() {
 
     if (step.value === 1) {
         formStep1.value.plan = props.plan.plan_nombre;
-        if (!validarFormularioPaso1()) {
+        if (validarFormularioPaso1()) {
             step.value = 2
         }
     } else {
         if (validarFormularioPaso2()) {
-
 
             const recaptchaResponse = grecaptcha.getResponse();
             errors.value.recaptcha = recaptchaResponse === '';
