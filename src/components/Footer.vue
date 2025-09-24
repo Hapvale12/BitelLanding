@@ -33,9 +33,9 @@
             <br>
             <br>
             <!-- button que redirija href="/politica-privacidad-bitel" -->
-            <a class="link-button" href="/politica-privacidad-bitel" target="_blank"><button class="link-button">Terminos y condiciones de uso</button></a>
+            <a class="link-button" href="/terminos-condiciones-bitel.html" target="_blank"><button class="link-button">Terminos y condiciones de uso</button></a>
             - 
-            <a class="link-button" href="/politica-privacidad-bitel" target="_blank"><button class="link-button">Política de Privacidad</button></a>
+            <a class="link-button" href="/politica-privacidad-bitel.html" target="_blank"><button class="link-button">Política de Privacidad</button></a>
             <!-- <button @click="handleClick" class="link-button">
                 Consideraciones y política de datos personales.
             </button> -->
