@@ -23,18 +23,26 @@
                 <p>72 horas después del pago de la renta adelantada.</p>
 
                 <h3>Contacto</h3>
-                <p>Teléfono: <a href="tel:+51900375029">+51 900 375 029</a></p>
+                <p>Teléfono: <a href="tel:+51900375029">+51 994 992 412</a></p>
+                <p>Correo: <a href="mailto:cambiate@cambiateabitel.com">cambiate@cambiateabitel.com</a></p>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <button @click="handleClick" class="link-button">
+            Distribuidor Autorizado Bitel - Todos los derechos reservados © 2024
+            <br>
+            <br>
+            <!-- button que redirija href="/politica-privacidad-bitel" -->
+            <a class="link-button" href="/politica-privacidad-bitel" target="_blank"><button class="link-button">Terminos y condiciones de uso</button></a>
+            - 
+            <a class="link-button" href="/politica-privacidad-bitel" target="_blank"><button class="link-button">Política de Privacidad</button></a>
+            <!-- <button @click="handleClick" class="link-button">
                 Consideraciones y política de datos personales.
-            </button>
+            </button> -->
         </div>
 
         <!-- Modal -->
-        <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+        <!-- <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Política de Datos Personales</h2>
@@ -47,7 +55,7 @@
                 </div>
                 <iframe :src="pdfUrl" width="100%" height="500px" style="border: none"></iframe>
             </div>
-        </div>
+        </div> -->
     </footer>
 </template>
 
@@ -56,24 +64,24 @@ export default {
     name: 'FooterFibra',
     data() {
         return {
-            showModal: false,
-            pdfUrl: './politica_de_datos_bitel.pdf'
+            // showModal: false,
+            // pdfUrl: './politica_de_datos_bitel.pdf'
         };
     },
     methods: {
-        handleClick() {
-            // Detectamos si el ancho es menor o igual a 768px (mobile)
-            if (window.innerWidth <= 768) {
-                // Abrir link en una pestaña nueva para móvil
-                window.open(this.pdfUrl, '_blank');
-            } else {
-                // Mostrar modal para escritorio
-                this.showModal = true;
-            }
-        },
-        closeModal() {
-            this.showModal = false;
-        }
+        // handleClick() {
+        //     // Detectamos si el ancho es menor o igual a 768px (mobile)
+        //     if (window.innerWidth <= 768) {
+        //         // Abrir link en una pestaña nueva para móvil
+        //         window.open(this.pdfUrl, '_blank');
+        //     } else {
+        //         // Mostrar modal para escritorio
+        //         this.showModal = true;
+        //     }
+        // },
+        // closeModal() {
+        //     this.showModal = false;
+        // }
     }
 };
 </script>

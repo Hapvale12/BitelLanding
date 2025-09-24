@@ -1,15 +1,16 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-import Home from '../views/Home.vue';
-import Fibra from '../views/Fibra.vue';
+import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
-    { path: '/', name: 'Home', component: Home },
-    { path: '/fibra', name: 'Fibra', component: Fibra },
+  {
+    path: '/',
+    name: 'Home',
+    component: () => import('../views/Fibra.vue') 
+  },
 ];
 
 const router = createRouter({
-    history: createWebHashHistory(""),
-    routes,
+  history: createWebHistory(),
+  routes,
 });
 
 export default router;

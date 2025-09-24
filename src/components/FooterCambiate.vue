@@ -38,13 +38,17 @@
         </div>
 
         <div class="footer-bottom">
-            <button @click="handleClick" class="link-button">
+            <!-- button que redirija href="/politica-privacidad-bitel" -->
+            <a href="/politica-privacidad-bitel"><button>Política de Privacidad de Bitel</button></a>
+
+
+            <!-- <button click="" class="link-button">
                 Consideraciones y política de datos personales.
-            </button>
+            </button> -->
         </div>
 
         <!-- Modal -->
-        <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+        <!-- <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Política de Datos Personales</h2>
@@ -55,9 +59,9 @@
                         </svg>
                     </button>
                 </div>
-                <iframe :src="pdfUrl" width="100%" height="500px" style="border: none"></iframe>
+                <iframe src="pdfUrl" width="100%" height="500px" style="border: none"></iframe>
             </div>
-        </div>
+        </div> -->
     </footer>
 </template>
 
@@ -67,23 +71,23 @@ export default {
     data() {
         return {
             showModal: false,
-            pdfUrl: './politica_de_datos_bitel.pdf'
+            // pdfUrl: './politica_de_datos_bitel.pdf'
         };
     },
     methods: {
-        handleClick() {
-            // Detectamos si el ancho es menor o igual a 768px (mobile)
-            if (window.innerWidth <= 768) {
-                // Abrir link en una pestaña nueva para móvil
-                window.open(this.pdfUrl, '_blank');
-            } else {
-                // Mostrar modal para escritorio
-                this.showModal = true;
-            }
-        },
-        closeModal() {
-            this.showModal = false;
-        }
+        // handleClick() {
+        //     // Detectamos si el ancho es menor o igual a 768px (mobile)
+        //     if (window.innerWidth <= 768) {
+        //         // Abrir link en una pestaña nueva para móvil
+        //         window.open(this.pdfUrl, '_blank');
+        //     } else {
+        //         // Mostrar modal para escritorio
+        //         this.showModal = true;
+        //     }
+        // },
+        // closeModal() {
+        //     this.showModal = false;
+        // }
     }
 };
 </script>

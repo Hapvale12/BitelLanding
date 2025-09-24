@@ -2,7 +2,7 @@
     <div class="fibra-container">
         <BannerCarousel />
         <PlansFibraCarousel />
-        <FooterFibra />
+        <Footer />
     </div>
 </template>
 
@@ -10,7 +10,7 @@
 
 import BannerCarousel from '../components/BannerCarousel.vue';
 import PlansFibraCarousel from '../components/PlansFibraCarousel.vue';
-import FooterFibra from '../components/FooterFibra.vue';
+import Footer from '../components/Footer.vue';
 
 </script>
 

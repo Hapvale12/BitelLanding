@@ -14,12 +14,12 @@
         <nav class="nav-links" :class="{ open: menuOpen }">
             <a href="#" class="nav-button" @click.prevent="handleClick('/')"
                 :class="{ loading: activePath === '/' }">
-                Cámbiate a Bitel
-            </a>
-            <a href="#" class="nav-button" @click.prevent="handleClick('/fibra')"
-                :class="{ loading: activePath === '/fibra' }">
                 Fibra Óptica
             </a>
+            <!-- <a href="#" class="nav-button" @click.prevent="handleClick('/fibra')"
+                :class="{ loading: activePath === '/fibra' }">
+                Fibra Óptica
+            </a> -->
         </nav>
     </header>
 </template>

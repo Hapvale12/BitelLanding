@@ -35,7 +35,7 @@
     phone: {
       type: String,
       required: true,
-      default: '51900375029'
+      default: '51994992412'
     }
   })
   </script>
