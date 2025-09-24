@@ -29,7 +29,7 @@
         </div>
 
         <div class="footer-bottom">
-            Distribuidor Autorizado Bitel - Todos los derechos reservados © 2024
+            Distribuidor Autorizado Bitel 
             <br>
             <br>
             <!-- button que redirija href="/politica-privacidad-bitel" -->
