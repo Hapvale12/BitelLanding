@@ -2,16 +2,18 @@
     <div class="app-layout">
         <Navbar />
         <main class="main-content">
-            <transition mode="in-out">
+            <transition name="fade" mode="in-out">
                 <router-view />
             </transition>
         </main>
+        <Footer />
     </div>
-    <FloatingContactButtons phone="51900375029" />
+    <FloatingContactButtons phone="51994992412" />
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"> 
 import Navbar from './components/NavBar.vue';
+import Footer from './components/Footer.vue';
 import FloatingContactButtons from './components/FloatingContactButtons.vue';
 </script>
 

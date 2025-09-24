@@ -100,14 +100,19 @@
                                 }}</small>
                             </div>
                         </div>
-
+                        
+                        <!-- En tu <template>, dentro de .checkbox-group -->
                         <div class="checkbox-group" v-if="step === 1">
                             <input type="checkbox" id="autorizo" v-model="formStep1.autorizo"
                                 :class="{ invalid: errors.autorizo }" />
                             <div class="checkbox-label">
-                                <label for="autorizo">Autorizo el uso de mis datos personales.</label>
-                                <small v-if="errors.autorizo && !formStep1.autorizo" class="error-msg"> {{
-                                    getErrorMessage('autorizo') }}</small>
+                                <label for="autorizo">
+                                    He leído y acepto la 
+                                    <a href="/politica-privacidad-bitel.html" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>.
+                                </label>
+                                <small v-if="errors.autorizo && !formStep1.autorizo" class="error-msg"> 
+                                    {{ getErrorMessage('autorizo') }}
+                                </small>
                             </div>
                         </div>
 
@@ -333,14 +338,23 @@ async function continuar() {
                 },
                 body: JSON.stringify(datosFinales)
             })
-                .then(response => {
-                    if (!response.ok) throw new Error('Error en la solicitud');
+            .then(response => {
+                if (!response.ok) {
+                        // Si la respuesta no es OK (ej: error 500, 404), lanza un error
+                        throw new Error('Error en la solicitud al servidor');
+                    }
                     return response.json();
                 })
-                .then(json => {
-                })
-                .catch(error => {
-                });
+            .then(json => {
+                // El envío fue exitoso, AHORA muestras la confirmación
+                mostrarConfirmacion();
+            })
+            .catch(error => {
+                // Aquí manejas el error
+                console.error("Hubo un problema al enviar el formulario:", error);
+                // Podrías mostrar un modal de error al usuario
+                alert("Hubo un error al enviar tus datos. Por favor, inténtalo de nuevo.");
+            });
 
             // Mostrar modal de éxito
             mostrarConfirmacion()
